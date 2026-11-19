@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0284c7" />
+  <title>تكنو (Techno) — المنصة الأكاديمية التفاعلية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    (function setupDynamicManifest() {
+      const manifest = {
+        name: "تكنو (Techno) — المنصة الأكاديمية",
+        short_name: "تكنو Techno",
+        lang: "ar",
+        dir: "rtl",
+        start_url: "./",
+        display: "standalone",
+        background_color: "#090d16",
+        theme_color: "#0284c7",
+        description: "منصة تكنو التعليمية التفاعلية لطلاب القسم العام بكلية تقنية المعلومات — المنهج الليبي",
+        icons: [
+          {
+            src: "https://placehold.co/192x192/0284c7/ffffff?text=T",
+            sizes: "192x192",
+            type: "image/png"
+          },
+          {
+            src: "https://placehold.co/512x512/4f46e5/ffffff?text=TECHNO",
+            sizes: "512x512",
+            type: "image/png"
+          }
+        ]
+      };
+      try {
+        const blob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = url;
+        document.head.appendChild(link);
+      } catch (e) {}
+    })();
+
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'sans-serif'],
+            body: ['Tajawal', 'Cairo', 'sans-serif'],
+          },
+          colors: {
+            techno: {
+              bg: '#090d16',
+              surface: '#111827',
+              card: '#152033',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+    }
+    .protected-select {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .allow-select, input, textarea, select {
+      user-select: text !important;
+      -webkit-user-select: text !important;
+    }
+    .math-ltr {
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.35);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.45);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.75);
+    }
+  </style>
+</head>
+<body id="appRoot" class="bg-slate-100 text-slate-900 dark:bg-techno-bg dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- الشريط العلوي -->
+  <header class="sticky top-0 z-40 border-b border-slate-200/80 dark:border-slate-800/90 bg-white/90 dark:bg-techno-surface/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 shrink-0">
+          <i class="fa-solid fa-robot text-lg"></i>
+        </div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-extrabold text-base sm:text-lg tracking-tight truncate">تكنو (Techno)</h1>
+            <span class="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-bold border border-sky-500/30">المنصة الأكاديمية • PWA</span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">القسم العام — كلية تقنية المعلومات (المنهج الليبي)</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <button id="installPwaBtn" type="button" onclick="triggerInstallGuide()" class="px-2.5 sm:px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-download"></i>
+          <span class="hidden md:inline">تثبيت التطبيق</span>
+        </button>
+
+        <button type="button" onclick="openChecklistModal()" class="px-2.5 sm:px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-list-check"></i>
+          <span class="hidden md:inline">النقاط المجمعة</span>
+        </button>
+
+        <button type="button" onclick="openQuick30Modal()" class="px-2.5 sm:px-3 py-2 rounded-xl text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-bolt"></i>
+          <span class="hidden sm:inline">قبل الامتحان بـ 30 د</span>
+        </button>
+
+        <button type="button" onclick="openSecurityGateModal()" class="px-2.5 sm:px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5" title="إدارة الحساب والتحقق">
+          <i class="fa-solid fa-user-shield text-sky-500"></i>
+          <span id="headerStudentName" class="max-w-[90px] truncate">طالب</span>
+        </button>
+
+        <button type="button" onclick="logoutSession()" class="px-2.5 sm:px-3 py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-500/30 transition flex items-center gap-1.5" title="تسجيل الخروج أو تبديل الحساب">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="hidden sm:inline">خروج</span>
+        </button>
+
+        <button type="button" onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition" title="تبديل الوضع الليلي/النهاري">
+          <i class="fa-solid fa-moon dark:hidden text-indigo-600"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- بانر المساعد الذكي «تكنو» + اختيار نمط الشرح -->
+  <section class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 pt-6">
+    <div class="rounded-3xl bg-gradient-to-l from-sky-600 via-indigo-700 to-slate-900 text-white p-5 sm:p-7 shadow-xl border border-white/10 relative overflow-hidden">
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>تكنو متصل الآن • رياضة 1 (أ. سوسن الصابري — المحاضرة الأولى: المجموعات والفترات)</span>
+          </div>
+          <h2 id="technoGreetingTitle" class="font-heading font-extrabold text-xl sm:text-2xl leading-snug">
+            أهلاً بك يا صديقي! أنا «تكنو» مساعدك الذكي.
+          </h2>
+          <p id="technoGreetingSub" class="text-xs sm:text-sm text-sky-100 leading-relaxed">
+            هل تريد أن أشرح لك <strong>بشكل مفصل وواضح</strong> لتفهم كل شيء من الأساس، أم تريد <strong>شرحاً مكثفاً وسريعاً (لمدة يوم / امتحان غداً)</strong>؟ اختر النمط المناسب لوقتك الآن!
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2.5 pt-1">
+            <button id="modeDetailedBtn" type="button" onclick="setStudyMode('detailed')" class="px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-white text-slate-900 shadow-md">
+              <i class="fa-solid fa-book-open-reader text-indigo-600"></i>
+              <span>شرح مفصل وواضح (فهم وتأسيس)</span>
+            </button>
+            <button id="modeIntensiveBtn" type="button" onclick="setStudyMode('intensive')" class="px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/25">
+              <i class="fa-solid fa-gauge-high text-amber-300"></i>
+              <span>شرح مكثف وسريع (لمدة يوم / امتحان غداً)</span>
+            </button>
+            <button type="button" onclick="openWorkspaceTab('chat')" class="px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-100 border border-emerald-400/30">
+              <i class="fa-solid fa-comments"></i>
+              <span>تحدث مع «تكنو» الآن</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- بطاقة تقدم الطالب وحالة التحقق -->
+        <div class="lg:col-span-4 bg-slate-950/45 backdrop-blur-md border border-white/15 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold">
+            <span class="text-sky-200">التقدم العام في المنصة</span>
+            <span id="globalProgressText" class="text-emerald-300 font-extrabold">0%</span>
+          </div>
+          <div class="w-full h-2.5 rounded-full bg-white/15 overflow-hidden">
+            <div id="globalProgressBar" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 w-0 transition-all duration-500"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+            <div class="bg-white/10 rounded-xl p-2.5">
+              <div class="text-sky-200">بنك أخطائي</div>
+              <div id="mistakesCountBadge" class="font-extrabold text-sm text-amber-300 mt-0.5">0 أخطاء</div>
+            </div>
+            <div class="bg-white/10 rounded-xl p-2.5">
+              <div class="text-sky-200">النمط وحالة الدخول</div>
+              <div id="currentModeBadge" class="font-extrabold text-sm text-emerald-300 mt-0.5 truncate">مفصل • غير محقق</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- المحتوى الرئيسي -->
+  <main class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- القائمة الجانبية -->
+    <aside class="lg:col-span-3 space-y-5">
+      <div class="bg-white dark:bg-techno-card rounded-3xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1.5">
+        <div class="px-3 py-1.5 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">المواد الدراسية الست</div>
+        <div id="subjectsNavList" class="space-y-1"></div>
+
+        <div class="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 space-y-1">
+          <div class="px-3 py-1 text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">أدوات وتفاعل</div>
+          <button type="button" onclick="openWorkspaceTab('chat')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+            <span class="flex items-center gap-2.5"><i class="fa-solid fa-comments text-indigo-500 w-4"></i> محادثة «تكنو» الذكية</span>
+            <span class="px-2 py-0.5 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-[10px] font-extrabold">AI</span>
+          </button>
+          <button type="button" onclick="openWorkspaceTab('mistakes')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+            <span class="flex items-center gap-2.5"><i class="fa-solid fa-triangle-exclamation text-amber-500 w-4"></i> بنك أخطائي المجمّع</span>
+            <span id="sideMistakesNum" class="px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-300 text-[11px]">0</span>
+          </button>
+          <button type="button" onclick="openWorkspaceTab('homework')" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+            <i class="fa-solid fa-clipboard-check text-emerald-500 w-4"></i> خانة الواجبات التفاعلية
+          </button>
+          <button type="button" onclick="openWorkspaceTab('inbox')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+            <span class="flex items-center gap-2.5"><i class="fa-solid fa-envelope-open-text text-sky-500 w-4"></i> الاستفسارات والرسائل</span>
+            <span id="sideMessagesNum" class="px-2 py-0.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 text-[11px]">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- درع الحماية من النسخ + PWA -->
+      <div class="bg-white dark:bg-techno-card rounded-3xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-indigo-500"></i> درع الحماية من النسخ
+          </span>
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="deterrentToggle" checked onchange="toggleCopyDeterrent(this.checked)" class="sr-only peer">
+            <div class="w-9 h-5 bg-slate-300 dark:bg-slate-700 rounded-full peer peer-checked:bg-indigo-600 relative after:content-[''] after:absolute after:top-0.5 after:right-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:-translate-x-4"></div>
+          </label>
+        </div>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+          حماية متصفح Google Chrome مفعّلة افتراضياً (منع الزر الأيمن وتحديد النصوص واختصارات النسخ). ملاحظة واضحة: حماية المتصفح تصعّب النسخ على أغلب المستخدمين، بينما يظل الكود الأمامي في المتصفح قابلاً للفحص من المطورين المتقدمين.
+        </p>
+        <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+          <div class="font-bold text-slate-700 dark:text-slate-200">تشغيل وتثبيت التطبيق:</div>
+          <p>يعمل على <strong>Google Chrome</strong> ويمكن تثبيته كتطبيق عبر قائمة المتصفح أو زر <strong>تثبيت التطبيق</strong>.</p>
+        </div>
+      </div>
+
+      <!-- قسم تقييم التطبيق في الواجهة الرئيسية -->
+      <div class="bg-white dark:bg-techno-card rounded-3xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold flex items-center gap-1.5">
+            <i class="fa-solid fa-star text-amber-400"></i> تقييم تطبيق تكنو
+          </span>
+          <span id="ratingSummaryBadge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-700 dark:text-amber-300">5.0 ★ (1)</span>
+        </div>
+
+        <div id="starRatingButtons" class="flex items-center justify-center gap-1.5 py-1">
+          <button type="button" onclick="selectStarRating(1)" class="star-btn text-xl text-amber-400 transition hover:scale-110" aria-label="1 نجمة"><i class="fa-solid fa-star"></i></button>
+          <button type="button" onclick="selectStarRating(2)" class="star-btn text-xl text-amber-400 transition hover:scale-110" aria-label="2 نجمة"><i class="fa-solid fa-star"></i></button>
+          <button type="button" onclick="selectStarRating(3)" class="star-btn text-xl text-amber-400 transition hover:scale-110" aria-label="3 نجوم"><i class="fa-solid fa-star"></i></button>
+          <button type="button" onclick="selectStarRating(4)" class="star-btn text-xl text-amber-400 transition hover:scale-110" aria-label="4 نجوم"><i class="fa-solid fa-star"></i></button>
+          <button type="button" onclick="selectStarRating(5)" class="star-btn text-xl text-amber-400 transition hover:scale-110" aria-label="5 نجوم"><i class="fa-solid fa-star"></i></button>
+        </div>
+
+        <input id="reviewCommentInput" type="text" placeholder="اكتب رأيك أو ملاحظتك باختصار..." class="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <button type="button" onclick="submitAppReview()" class="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold transition">
+          إرسال التقييم
+        </button>
+
+        <div id="recentReviewsList" class="space-y-1.5 max-h-36 overflow-y-auto pt-1"></div>
+      </div>
+    </aside>
+
+    <!-- منطقة العمل الرئيسية -->
+    <div class="lg:col-span-9 space-y-6">
+      <div id="dynamicWorkspace"></div>
+    </div>
+  </main>
+
+  <!-- نافذة سؤال الإنجليزي المفاجئ كل 10 دقائق (إجابة خلال دقيقة بالفويس) -->
+  <div id="englishSurpriseModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white dark:bg-techno-card border border-emerald-500/40 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 text-xs font-extrabold flex items-center gap-1.5">
+          <i class="fa-solid fa-microphone-lines animate-pulse"></i> سؤال إنجليزي مفاجئ لترسيخ الحفظ!
+        </span>
+        <div class="px-3 py-1 rounded-xl bg-rose-500/15 text-rose-600 dark:text-rose-300 text-xs font-extrabold font-mono">
+          <i class="fa-solid fa-stopwatch"></i> <span id="surpriseTimerText">60</span>s
+        </div>
+      </div>
+
+      <h3 id="surpriseQuestionPrompt" class="font-heading font-bold text-base leading-relaxed"></h3>
+      <p id="surpriseQuestionHint" class="text-xs text-slate-500 dark:text-slate-400"></p>
+
+      <div id="surpriseOptionsBox" class="space-y-2"></div>
+
+      <div class="bg-slate-50 dark:bg-slate-900/70 rounded-2xl p-3.5 border border-slate-200 dark:border-slate-800 space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-bold text-slate-600 dark:text-slate-300">الإجابة عبر الفويس (خلال دقيقة):</span>
+          <button type="button" onclick="toggleVoiceCapture()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-microphone"></i> <span id="voiceRecordLabel">ابدأ الفويس</span>
+          </button>
+        </div>
+        <textarea id="surpriseVoiceAnswer" rows="2" placeholder="ستظهر إجابتك الصوتية هنا تلقائياً، أو يمكنك كتابتها هنا..." class="w-full rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+      </div>
+
+      <div id="surpriseResultBox" class="hidden p-3 rounded-2xl text-xs leading-relaxed"></div>
+
+      <div class="flex items-center justify-between pt-1">
+        <button type="button" onclick="submitSurpriseAnswer()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold transition">تحقق وثبّت الإجابة</button>
+        <button type="button" onclick="closeSurpriseModal()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة قائمة النقاط المجمعة -->
+  <div id="checklistModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white dark:bg-techno-card border border-slate-200 dark:border-slate-700 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-base">قائمة النقاط المجمعة الكاملة في المنصة</h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">كل المتطلبات والإضافات المدمجة في مكان واحد</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeChecklistModal()" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="checklistModalBody" class="p-5 overflow-y-auto space-y-2.5 text-xs leading-relaxed"></div>
+      <div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+        <button type="button" onclick="closeChecklistModal()" class="px-5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold">تم</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة «قبل الامتحان بـ 30 دقيقة» -->
+  <div id="quick30Modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white dark:bg-techno-card border border-amber-500/40 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-base">مراجعة خاطفة — قبل الامتحان بـ 30 دقيقة</h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">أهم القوانين والرموز وشروط استخدامها [مهم للامتحان ⚠️]</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeQuick30Modal()" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div id="quick30Body" class="p-5 overflow-y-auto space-y-2.5 text-xs leading-relaxed"></div>
+      <div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+        <button type="button" onclick="closeQuick30Modal()" class="px-5 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold">جاهز للامتحان</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- بوابة الأمان وتسجيل الدخول والتحقق عبر رقم الهاتف (OTP) -->
+  <div id="studentNameModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+    <div class="bg-white dark:bg-techno-card border border-slate-200 dark:border-slate-700 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4 my-auto">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-lg shadow-md">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-base">بوابة الأمان والتحقق (OTP) — تكنو</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">سجّل اسمك ورقم هاتفك وأرسل رمز التحقق للوصول لحسابك</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeSecurityGateModal()" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold mb-1">1. الاسم الكامل للطالب</label>
+          <input id="studentNameInput" type="text" placeholder="مثال: أحمد محمد" class="w-full rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-sky-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold mb-1">2. رقم الهاتف وقناة الإشعار للتحقق</label>
+          <div class="flex gap-2">
+            <select id="phoneCountrySelect" class="rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-xs font-extrabold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="+218">ليبيا (+218)</option>
+              <option value="+971">الإمارات (+971)</option>
+              <option value="+966">السعودية (+966)</option>
+              <option value="+974">قطر (+974)</option>
+              <option value="+973">البحرين (+973)</option>
+              <option value="+20">مصر (+20)</option>
+            </select>
+            <input id="studentPhoneInput" type="tel" placeholder="مثال: 912345678" class="flex-grow rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-bold math-ltr text-left focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-bold mb-1">قناة الإرسال المفضلة</label>
+            <select id="otpChannelSelect" class="w-full rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="WhatsApp">واتساب (WhatsApp)</option>
+              <option value="SMS">رسالة نصية (SMS)</option>
+              <option value="Email">البريد الإلكتروني (Email)</option>
+              <option value="Messenger">ماسنجر (Messenger)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">البريد أو حساب التواصل (اختياري)</label>
+            <input id="studentContactTargetInput" type="text" placeholder="email@example.com أو معرف" class="w-full rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <button type="button" onclick="sendOtpVerificationCode()" class="px-4 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-extrabold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-paper-plane"></i> إرسال رمز التحقق (OTP)
+          </button>
+          <a id="whatsappDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-3.5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold transition flex items-center gap-1.5">
+            <i class="fa-brands fa-whatsapp"></i> فتح واتساب بالرمز
+          </a>
+        </div>
+
+        <div id="otpDispatchPreview" class="hidden rounded-2xl bg-sky-500/10 border border-sky-500/30 p-3 text-xs space-y-1.5"></div>
+
+        <div id="otpVerifySection" class="pt-1 space-y-2">
+          <label class="block text-xs font-bold">3. أدخل رمز التحقق المكوّن من 6 أرقام</label>
+          <div class="flex gap-2">
+            <input id="otpCodeInput" type="text" maxlength="6" placeholder="000000" class="flex-grow rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-extrabold tracking-widest math-ltr text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <button type="button" onclick="verifyAndLoginStudent()" class="px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold transition">
+              تحقق ودخول
+            </button>
+          </div>
+          <p id="otpStatusFeedback" class="text-[11px] font-bold text-slate-500 dark:text-slate-400"></p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3 text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
+        <div class="font-extrabold text-amber-600 dark:text-amber-400"><i class="fa-solid fa-circle-info"></i> تنويه تقني شفاف حول الإرسال الخارجي:</div>
+        <p>لإرسال رسائل SMS أو WhatsApp أو Messenger أو Email فعلية إلى جهة خارجية دون تدخل يدوي، يلزم ربط خادم خلفي (Backend) أو بوابة SMS/WhatsApp API أو خدمة بريد. هنا يتم توليد رمز OTP فوري واختباره وتوثيق محاولة الإرسال والفتح المباشر عبر واتساب، مع إمكانية الدخول السريع للتجربة.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+        <button type="button" onclick="quickGuestLogin()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-extrabold transition">
+          دخول سريع للتجربة
+        </button>
+        <button type="button" onclick="closeSecurityGateModal()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold transition">
+          متابعة إلى المنصة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تنبيه عائم -->
+  <div id="toastBanner" class="fixed bottom-5 left-5 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl text-xs font-extrabold flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i>
+    <span id="toastText">تم</span>
+  </div>
+
+  <!-- التذييل -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-techno-surface py-5 mt-10 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span>منصة <strong>تكنو (Techno)</strong> التعليمية — رياضة 1 (أ. سوسن الصابري) • كلية تقنية المعلومات</span>
+      <span>جميع الحقوق محفوظة © 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // 1. قائمة النقاط المجمعة الكاملة
+    // =========================================================================
+    const AGREED_POINTS = [
+      "المساعد الذكي «تكنو» يرحب بالطالب باسمه، يحفظ الجلسة، ويتيح التبديل الفوري بين «الشرح المفصل والواضح» و«الشرح المكثف السريع (لمدة يوم / امتحان غداً)».",
+      "بوابة أمان وتحقق عبر رمز OTP مكوّن من 6 أرقام لرقم الهاتف مع تحديد القناة (واتساب، SMS، بريد إلكتروني، ماسنجر) وفتح مباشر عبر واتساب، مع إمكانية الدخول السريع وتبديل الحساب.",
+      "دعم تشغيل التطبيق كـ PWA على Google Chrome وإمكانية تثبيته على الجهاز.",
+      "في الرياضيات (رياضة 1): الجزء النظري للشرح والفهم فقط (وليس للحفظ)، مع شرح متى يُستخدم كل قانون أو رمز ووضع وسم [مهم للامتحان ⚠️].",
+      "دمج محتوى الشيت الأول بالكامل (المحاضرة الأولى — أ. سوسن الصابري، الصفحات من 1 إلى 10: المجموعات، طرق التعبير، مجموعات الأعداد، أنواع المجموعات، الانتماء، العمليات، النظرية وقوانين دي مورجان، والفترات والعمليات عليها).",
+      "خانة الشيتات: شيت مستقل لكل محاضرة مع لائحة تشخيص مشاكل الطالب في الشيت.",
+      "خانة التأسيس والقوانين: عرض القوانين والرموز، شرح متى يُستخدم كل منها وشروطه، و5 أمثلة تأسيسية متدرجة لكل قانون/مفهوم.",
+      "خانة الشرح والدرس: مفاهيم أساسية، 10 أمثلة محلولة خطوة بخطوة بنفس أفكار الورق وإجاباته الدقيقة، ومساحة لإضافة فيديوهاتك وصورك وشرحك مع استخراج عنوان وملخص تلقائي من كلام الفيديو.",
+      "سؤال تحقق من الفهم (نعم / لا) بعد الشرح: إذا قال الطالب «لا» يعرض تكنو تبسيطاً إضافياً ومثالاً أسهل بنفس الفكرة.",
+      "اختبار محاكاة الامتحان النصفي من 30 درجة: يحصي الدرجة من 30، يفرز الأخطاء ويحدد سببها، يشرح كل خطأ بالتفصيل، ويحفظ الأخطاء في «بنك أخطائي» لإعادة الاختبار في الأخطاء فقط.",
+      "اللغة الإنجليزية: شرح القواعد بأمثلة من الحياة اليومية، مترجم ذكي للكلمات، وسؤال مفاجئ كل 10 دقائق مع عداد دقيقة وإجابة عبر الفويس.",
+      "المواد الحفظية (الثقافة الوطنية، الدراسات الإسلامية، اللغة العربية): تلخيص شامل ومبسط، تعريفات، جانب نظري، وأسئلة متنوعة.",
+      "خانة الواجبات التفاعلية التي تسأل الطالب ماذا يريد بالضبط، وخانة الاستفسارات والرسائل مع تحديد درجة الاستعجال، وتقييم التطبيق، وصفحة «قبل الامتحان بـ 30 دقيقة»."
+    ];
+
+    // =========================================================================
+    // 2. بيانات المواد — رياضة 1 (المحاضرة الأولى: ص1 إلى ص10 — أ. سوسن الصابري)
+    // =========================================================================
+    const SUBJECTS = [
+      {
+        id: 'math',
+        name: 'الرياضيات (رياضة 1)',
+        kind: 'quantitative',
+        icon: 'fa-calculator',
+        accent: 'from-indigo-500 to-sky-500',
+        sheet: {
+          title: 'شيت 01 — رياضة 1 (المحاضرة الأولى — أ. سوسن الصابري • ص1 إلى ص10)',
+          topics: 'مفهوم المجموعة وطرق التعبير (الوصف اللفظي، الرمزي، الحصر)، مجموعات الأعداد (N, W, Z, Q, Q\', R)، أنواع المجموعات، مجموعة القوة P(A)، التساوي والتكافؤ، الانتماء (∈, ∉)، العمليات (∪, ∩, Aᶜ, الفرق)، النظرية وقوانين دي مورجان، والفترات والعمليات عليها.'
+        },
+        understandingNote: {
+          title: 'فهم المفاهيم الأساسية (للشرح والفهم فقط — غير مطلوبة للحفظ)',
+          text: 'في رياضة 1 نستخدم الوصف النظري لتوضيح الصورة الذهنية فقط: المجموعة تجمع معرّف تعريفاً جيداً لا غموض فيه (تُرمز بأحرف كبيرة مثل A, B وعناصرها بأحرف صغيرة مثل a, b). والفترات هي مجموعات جزئية أو جزئية فعلية من مجموعة الأعداد الحقيقية ℝ، ونستخدم الأقواس المربعة [ ] عندما يكون الحد داخلاً (≤ أو ≥) والأقواس الهلالية ( ) عندما لا يكون الحد داخلاً (< أو >).'
+        },
+        formulas: [
+          {
+            code: 'م-1',
+            name: 'طرق التعبير عن المجموعة ومجموعات الأعداد',
+            formula: 'ℕ={1,2,3,...}, 𝕎={0,1,2,...}, ℤ={0,±1,±2,...}, ℚ={a/b : a,b∈ℤ, b≠0}, ℝ',
+            examImportant: true,
+            whenToUse: 'نستخدم طريقة الحصر/القائمة عندما نكتب العناصر صراحة داخل { } مفصولة بفواصل، ونستخدم الوصف اللفظي أو الرمزي {x : شرط} عندما نعبر بصفة أو شرط يميز العناصر (خاصة في المجموعات غير المنتهية أو الشروط العددية مثل x ∈ ℤ).',
+            foundationExamples: [
+              { q: 'اكتب بطريقة الحصر: أحرف كلمة "كلية" (ص1)', steps: 'نستخرج الحروف المميزة داخل قوسي مجموعة مفصولة بفاصلة.', ans: '{ك، ل، ي، ة}' },
+              { q: 'اكتب بطريقة الحصر: أيام الأسبوع (ص1)', steps: 'نكتب أيام الأسبوع السبعة داخل { }.', ans: '{السبت، الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس، الجمعة}' },
+              { q: 'اكتب بالوصف الرمزي: x عدد زوجي أقل من 10 (ص1)', steps: 'نضع المتغير ثم النقطتين (:) أو الخط (|) ثم الشرط.', ans: '{x : x عدد زوجي أقل من 10}' },
+              { q: 'ما الفرق بين ℕ و 𝕎؟ (ص2)', steps: 'الأعداد الطبيعية ℕ تبدأ من 1، بينما الأعداد الكلية 𝕎 تضيف الصفر.', ans: '𝕎 = ℕ ∪ {0}' },
+              { q: 'هل √2 و √3 ينتميان إلى ℚ أم ℚ\' (غير القياسية)؟ (ص2)', steps: 'لا يمكن وضع √2 أو √3 على صورة كسر a/b حيث a,b ∈ ℤ و b ≠ 0.', ans: 'ينتميان إلى ℚ\' (وضمن ℝ)' }
+            ]
+          },
+          {
+            code: 'م-2',
+            name: 'أنواع المجموعات، مجموعة القوة P(A)، والانتماء/الجزئية',
+            formula: '|P(A)| = 2ⁿ  |  ∅ ⊆ A  |  {∅} ≠ ∅  |  {0} ≠ ∅  |  ∈, ∉ (عنصر/مجموعة) vs ⊆, ⊂ (مجموعة/مجموعة)',
+            examImportant: true,
+            whenToUse: 'نستخدم ∈ و ∉ بين عنصر ومجموعة، ونستخدم ⊆ و ⊂ و ⊈ بين مجموعة ومجموعة. نستخدم |P(A)| = 2ⁿ لإيجاد عدد عناصر مجموعة القوة (حيث n عدد عناصر A). وننتبه أن المجموعة الخالية هي ∅ أو { }، بينما {0} و {∅} مجموعتان غير خاليتين (كل منهما يحتوي عنصراً واحداً).',
+            foundationExamples: [
+              { q: 'أوجد عدد عناصر مجموعة القوة لـ A = {x, y, z} واكتب P(A) (ص3)', steps: 'عدد عناصر A هو n = 3، إذن عدد عناصر P(A) هو 2³ = 8 مجموعات جزئية.', ans: 'العدد = 8؛ P(A) = {∅, A, {x}, {y}, {z}, {x,y}, {x,z}, {y,z}}' },
+              { q: 'حدد العلاقة بين A = {1,2,3} و B = {1,2,3,4,5} (ص2)', steps: 'كل عناصر A موجودة في B مع وجود عناصر إضافية في B.', ans: 'A ⊂ B (جزئية فعلية، وكذلك A ⊆ B)' },
+              { q: 'حدد العلاقة بين A = {1,2,3} و B = {1,2,4,5} (ص2-3)', steps: 'العنصر 3 موجود في A وغير موجود في B.', ans: 'A ⊈ B' },
+              { q: 'قارن بين {0} و ∅ و {∅} (ص2)', steps: '{0} تحوي عنصراً هو 0، و{∅} تحوي عنصراً هو ∅، أما ∅ فلا تحوي أي عنصر.', ans: '{0} ≠ ∅ ، {∅} ≠ ∅ ، و ∅ ⊆ أي مجموعة' },
+              { q: 'متى تكون مجموعتان متكافئتين A ≡ B ومتى متساويتين A = B؟ (ص3-4)', steps: 'التساوي يعني نفس العناصر بالضبط، والتكافؤ يعني نفس عدد العناصر فقط (وكل تساوٍ يستلزم تكافؤاً والعكس غير صحيح).', ans: 'إذا A = B فإن A ≡ B؛ مثل {1,2,3} ≡ {a,b,c} ولكن غير متساويتين' }
+            ]
+          },
+          {
+            code: 'م-3',
+            name: 'العمليات على المجموعات وقوانين دي مورجان (De Morgan)',
+            formula: 'A∪B={x:x∈A أو x∈B} | A∩B={x:x∈A و x∈B} | Aᶜ={x:x∈U و x∉A} | A-B={x:x∈A و x∉B} | (A∪B)ᶜ=Aᶜ∩Bᶜ ، (A∩B)ᶜ=Aᶜ∪Bᶜ',
+            examImportant: true,
+            whenToUse: 'الاتحاد (∪) يجمع كل العناصر دون تكرار؛ التقاطع (∩) يأخذ العناصر المشتركة فقط؛ المتممة (Aᶜ) تأخذ ما في الشاملة U وليس في A؛ الفرق (A - B) يأخذ ما في A وليس في B (انتبه أن A - B ≠ B - A غالباً)؛ وقوانين دي مورجان توزع المتممة وتقلب ∪ إلى ∩ والعكس.',
+            foundationExamples: [
+              { q: 'إذا كانت A = {5,3,0,10} و B = {7,3,8,2}، أوجد A ∪ B (ص4-5)', steps: 'نجمع عناصر المجموعتين دون تكرار مع الترتيب.', ans: '{0, 2, 3, 5, 7, 8, 10}' },
+              { q: 'إذا كانت A = {1,2,3,4} و B = {1,3,5,7}، أوجد A ∩ B (ص5)', steps: 'نستخرج العناصر المشتركة بين A و B.', ans: '{1, 3}' },
+              { q: 'إذا كانت U = {1,2,...,12} و A = {1,2,3,4,5}، أوجد Aᶜ (ص5)', steps: 'نأخذ عناصر U غير الموجودة في A.', ans: '{6, 7, 8, 9, 10, 11, 12}' },
+              { q: 'إذا كانت A = {1,2,3,4,5} و B = {1,2,3,4,5,6,7}، أوجد A - B و B - A (ص6)', steps: 'كل عناصر A موجودة في B إذن A - B = ∅، بينما 6 و 7 في B وليسا في A.', ans: 'A - B = ∅ ، B - A = {6, 7}' },
+              { q: 'اكتب مكملة (A ∪ B)ᶜ و (A ∩ B)ᶜ حسب قوانين دي مورجان (ص7)', steps: 'نوزع المتممة على A و B ونعكس العملية الداخلية.', ans: '(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ  ،  (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ' }
+            ]
+          },
+          {
+            code: 'م-4',
+            name: 'الفترات الحقيقية والعمليات عليها (ص8 إلى ص10)',
+            formula: '[a,b]={x:a≤x≤b} | (a,b)={x:a<x<b} | (a,b]={x:a<x≤b} | [a,b)={x:a≤x<b} | ±∞ دائماً مفتوحة',
+            examImportant: true,
+            whenToUse: 'نستخدم الفترات لتمثيل مجموعات جزئية من الأعداد الحقيقية ℝ على خط الأعداد. دائرة مغلقة (مظللة) تعني ≤ أو ≥ و[ أو ]، ودائرة مفتوحة (غير مظللة) تعني < أو > و( أو ). اللانهاية (-∞ أو +∞) تُكتب دائماً بقوس مفتوح (). عند وجود فترة مثل [5,3] نرتب الحدين تصاعدياً من الأصغر للأكبر على خط الأعداد [3,5].',
+            foundationExamples: [
+              { q: 'اكتب الفترة [-4, 2] رمزياً وبيانياً على خط الأعداد (ص9)', steps: 'القوسان مغلقان عند -4 و 2، إذن x محصورة بينهما مع المساواة.', ans: '{x : -4 ≤ x ≤ 2} (نقطتان مغلقتان عند -4 و 2)' },
+              { q: 'اكتب الفترة (4, 9) رمزياً وبيانياً (ص9)', steps: 'القوسان مفتوحان عند 4 و 9، فلا توجد مساواة.', ans: '{x : 4 < x < 9} (نقطتان مفتوحتان عند 4 و 9)' },
+              { q: 'اكتب الفترة (-∞, 2) رمزياً (ص10)', steps: 'جميع الأعداد الحقيقية الأصغر تماماً من 2.', ans: '{x : -∞ < x < 2} أو {x : x < 2}' },
+              { q: 'إذا كانت A = [-2, 2] و B = [-4, ∞)، أوجد A ∪ B و A ∩ B و A - B و B - A (ص10)', steps: 'نحدد الفترتين على خط الأعداد: A من -2 إلى 2، وB من -4 إلى ∞.', ans: 'A∪B = [-4, ∞) ، A∩B = [-2, 2] ، A-B = ∅ ، B-A = [-4, 2) ∪ (2, ∞)' },
+              { q: 'إذا كانت A = [-2, 2] و B = [-4, ∞)، أوجد Aᶜ و Bᶜ في ℝ (ص10)', steps: 'Aᶜ = ℝ \\ [-2, 2] و Bᶜ = ℝ \\ [-4, ∞).', ans: 'Aᶜ = (-∞, -2) ∪ (2, ∞) ، Bᶜ = (-∞, -4)' }
+            ]
+          }
+        ],
+        tenExamples: [
+          {
+            title: 'مثال 1 (ص1 — الحصر والوصف اللفظي/الرمزي)',
+            problem: 'اكتب بطريقة الحصر والوصف الرمزي: (1) أيام الأسبوع، (2) أحرف كلمة كلية.',
+            solution: '(1) الحصر: {السبت، الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس، الجمعة}، الوصف الرمزي: {x : x أيام الأسبوع}. (2) الحصر: {ك، ل، ي، ة}، الوصف الرمزي: {x : x أحرف من حروف الأبجدية لكلمة كلية}.'
+          },
+          {
+            title: 'مثال 2 (ص2 — المجموعة الخالية والجزئية)',
+            problem: 'إذا كانت A = {x : x عدد صحيح بين 1 و 0}، فماذا تساوي A؟ وما العلاقة بين {0} و ∅ و {∅}؟',
+            solution: 'A = ∅ (لا يوجد عدد صحيح بين 0 و 1). مع ملاحظة أن {0} ≠ ∅ و {∅} ≠ ∅.'
+          },
+          {
+            title: 'مثال 3 (ص2-3 — المجموعات الجزئية)',
+            problem: 'إذا كانت A = {1,2,3}: (أ) مع B = {1,2,3,4,5}، (ب) مع B = {1,2,3}، (ج) مع B = {1,2,4,5}.',
+            solution: '(أ) A ⊂ B (جزئية فعلية). (ب) A ⊆ B (جزئية). (ج) A ⊈ B (لأن 3 ∉ B).'
+          },
+          {
+            title: 'مثال 4 (ص3 — مجموعة القوة P(A))',
+            problem: 'إذا كانت A = {x, y, z}، أوجد عدد عناصر مجموعة القوة واكتب P(A).',
+            solution: 'عدد العناصر = 2ⁿ = 2³ = 8، و P(A) = {∅, A, {x}, {y}, {z}, {x,y}, {x,z}, {y,z}}.'
+          },
+          {
+            title: 'مثال 5 (ص4 — التساوي والتكافؤ)',
+            problem: 'قارن بين: (1) A = {2,4,6} و B = {x : x عدد زوجي أكبر من 0 وأصغر من 8}، (2) A = {1,2,3} و B = {a,b,c}.',
+            solution: '(1) B = {2,4,6} إذن A = B وبالتالي A ≡ B. (2) لهما نفس عدد العناصر (3) إذن A ≡ B ولكن A ≠ B.'
+          },
+          {
+            title: 'مثال 6 (ص4-5 — الاتحاد والتقاطع والمتممة)',
+            problem: 'احسب: (1) A ∪ B حيث A={5,3,0,10}, B={7,3,8,2}، (2) A ∩ B حيث A={1,2,3,4}, B={1,3,5,7}، (3) Aᶜ حيث U={1,2,...,12}, A={1,2,3,4,5}.',
+            solution: '(1) A ∪ B = {0,2,3,5,7,8,10}. (2) A ∩ B = {1,3}. (3) Aᶜ = {6,7,8,9,10,11,12}.'
+          },
+          {
+            title: 'مثال 7 (ص6 — عمليات شاملة على المجموعات)',
+            problem: 'إذا كانت U={1,2,3,4,5,6,7,8,9,10}، A={1,2,3,4,5}، B={x : x ≤ 7, x ∈ ℕ}، أوجد A∩B، A∪B، A-B، B-A، Aᶜ، (A∩B)ᶜ.',
+            solution: 'B={1,2,3,4,5,6,7}؛ إذن: A∩B={1,2,3,4,5}، A∪B={1,2,3,4,5,6,7}، A-B=∅ (أو { })، B-A={6,7}، Aᶜ={6,7,8,9,10}، (A∩B)ᶜ={6,7,8,9,10}.'
+          },
+          {
+            title: 'مثال 8 (ص7 — عمليات مركبة على المجموعات)',
+            problem: 'إذا كانت U={A,B,C,D,E,F,G,H,I,J,K}، A={C,E,H,I,K}، B={A,B,C,D,E,K}، أوجد: (1) Aᶜ - B، (2) Aᶜ - Bᶜ، (3) (A∪B) - B، (4) (A-B) ∩ A.',
+            solution: 'Aᶜ={A,B,D,F,G,J} و Bᶜ={F,G,H,I,J}؛ إذن: (1) Aᶜ - B = {F,G,J}، (2) Aᶜ - Bᶜ = {A,B,D}، (3) (A∪B) - B = {H,I}، (4) (A-B) ∩ A = {H,I}.'
+          },
+          {
+            title: 'مثال 9 (ص9-10 — كتابة الفترات رمزياً)',
+            problem: 'اكتب الفترات التالية رمزياً: [-4,2]، (4,9)، (-∞,2)، [-7,∞)، (-2,5]، [5,3].',
+            solution: '[-4,2]={x:-4≤x≤2}، (4,9)={x:4<x<9}، (-∞,2)={x:-∞<x<2}، [-7,∞)={x:-7≤x<∞}، (-2,5]={x:-2<x≤5}، [5,3]={x:5≤x<3} (وتُمثل على خط الأعداد من الأصغر 3 إلى الأكبر 5).'
+          },
+          {
+            title: 'مثال 10 (ص10 — العمليات على الفترات في ℝ)',
+            problem: 'إذا كانت A = [-2, 2] و B = [-4, ∞)، أوجد: A∪B، A∩B، A-B، B-A، Aᶜ، Bᶜ.',
+            solution: 'A∪B = [-4, ∞)، A∩B = [-2, 2]، A-B = ∅، B-A = [-4, 2) ∪ (2, ∞)، Aᶜ = (-∞, -2) ∪ (2, ∞)، Bᶜ = (-∞, -4).'
+          }
+        ],
+        easierFollowUp: {
+          simplified: 'تذكّر قاعدة «الامتلاء والحدود» في المجموعات والفترات: ∪ يضم الكل، ∩ يأخذ المشترك فقط، A - B يأخذ ما يخص A فقط ولا يوجد في B، وفي الفترات القوس المربع [ ] يضم الرقم والقوس الهلالي ( ) لا يضمه.',
+          easyExample: 'لو A = {1,2} و B = {2,3}: الاتحاد {1,2,3}، التقاطع {2}، والفرق A - B = {1}.'
+        },
+        midterm30: [
+          {
+            id: 'm30-sets-1',
+            points: 10,
+            category: 'أنواع المجموعات ومجموعة القوة (ص2-3)',
+            question: 'إذا كانت المجموعة A = {x, y, z}، فما عدد عناصر مجموعة القوة P(A) وما قيمة {0} مقارنة بـ ∅؟',
+            options: [
+              'عدد عناصر P(A) يساوي 8، و {0} ≠ ∅',
+              'عدد عناصر P(A) يساوي 6، و {0} = ∅',
+              'عدد عناصر P(A) يساوي 3، و {∅} = ∅',
+              'عدد عناصر P(A) يساوي 9، و {0} = ∅'
+            ],
+            correct: 0,
+            diagnosis: 'الخطأ الشائع هو حساب عدد عناصر P(A) بـ 2×3=6 أو 3²=9 بدلاً من 2ⁿ = 2³ = 8، أو اعتبار {0} فارغة مثل ∅.',
+            detailedExplanation: 'عدد عناصر A هو n = 3، إذن |P(A)| = 2³ = 8. كما أن {0} مجموعة تحتوي عنصراً واحداً هو 0، لذلك {0} ≠ ∅.'
+          },
+          {
+            id: 'm30-ops-2',
+            points: 10,
+            category: 'العمليات على المجموعات وقوانين دي مورجان (ص5-7)',
+            question: 'حسب قوانين دي مورجان، ما مكملة الاتحاد (A ∪ B)ᶜ ؟',
+            options: [
+              'Aᶜ ∩ Bᶜ',
+              'Aᶜ ∪ Bᶜ',
+              'A ∩ B',
+              'A - B'
+            ],
+            correct: 0,
+            diagnosis: 'الخطأ الشائع عند تطبيق قوانين دي مورجان هو نسيان قلب رمز الاتحاد ∪ إلى تقاطع ∩.',
+            detailedExplanation: 'قانون دي مورجان الأول ينص على أن مكملة الاتحاد تساوي تقاطع المتممتين: (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ، بينما مكملة التقاطع هي (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ.'
+          },
+          {
+            id: 'm30-int-3',
+            points: 10,
+            category: 'الفترات والعمليات عليها في ℝ (ص8-10)',
+            question: 'إذا كانت A = [-2, 2] و B = [-4, ∞)، فما ناتج A ∩ B و A - B ؟',
+            options: [
+              'A ∩ B = [-2, 2] و A - B = ∅',
+              'A ∩ B = [-4, ∞) و A - B = [-2, 2]',
+              'A ∩ B = ∅ و A - B = [-2, 2]',
+              'A ∩ B = (-2, 2) و A - B = [-4, -2)'
+            ],
+            correct: 0,
+            diagnosis: 'الخطأ الشائع هو عكس الاتحاد والتقاطع أو عدم ملاحظة أن الفترة [-2, 2] محتواة بالكامل داخل [-4, ∞).',
+            detailedExplanation: 'لأن كل عناصر [-2, 2] تقع ضمن [-4, ∞)، فإن تقاطعهما هو [-2, 2]، والفرق A - B يساوي ∅ لعدم وجود عناصر في A خارجة عن B.'
+          }
+        ]
+      },
+      {
+        id: 'physics',
+        name: 'الفيزياء العامة',
+        kind: 'quantitative',
+        icon: 'fa-atom',
+        accent: 'from-cyan-500 to-blue-600',
+        sheet: {
+          title: 'شيت الفيزياء — جاهز لاستقبال أوراقك',
+          topics: 'بانتظار إرسال ورق الفيزياء لإدراج القوانين والأمثلة واختبار الـ 30 درجة.'
+        },
+        understandingNote: {
+          title: 'الفيزياء العامة',
+          text: 'سيتم هنا عرض القوانين وشروط استخدامها و5 أمثلة تأسيسية و10 أمثلة واختبار نصفي من 30 درجة فور إرسال ورق المادة.'
+        },
+        formulas: [],
+        tenExamples: [],
+        easierFollowUp: { simplified: '', easyExample: '' },
+        midterm30: []
+      },
+      {
+        id: 'english',
+        name: 'اللغة الإنجليزية',
+        kind: 'english',
+        icon: 'fa-language',
+        accent: 'from-emerald-500 to-teal-600',
+        sheet: {
+          title: 'شيت اللغة الإنجليزية — القواعد، المترجم الذكي، والأسئلة المفاجئة',
+          topics: 'شرح القواعد بأمثلة من الحياة اليومية، مترجم ذكي للكلمات، وأسئلة مفاجئة كل 10 دقائق للإجابة خلال دقيقة عبر الفويس.'
+        },
+        grammarLessons: [
+          {
+            ruleTitle: 'قواعد الإنجليزية (جاهزة للتوسع حسب صور شيتك)',
+            simpleExplanation: 'نشرح القاعدة بأسلوب مبسط مع ربطها بمواقف من الحياة اليومية، ويمكنك استخدام المترجم الذكي لأي كلمة وتجربة السؤال المفاجئ.',
+            lifeExamples: [
+              { en: 'I review my notes before the exam.', ar: 'أراجع ملاحظاتي قبل الامتحان.' },
+              { en: 'She practices English every morning.', ar: 'هي تتدرب على الإنجليزية كل صباح.' }
+            ]
+          }
+        ],
+        dictionary: {
+          'set': { meaning: 'مجموعة', note: 'تجمع من العناصر أو الأشياء المعرفة بوضوح.' },
+          'interval': { meaning: 'فترة', note: 'مجال أو مدى محصور بين حدين في الأعداد أو الزمن.' },
+          'union': { meaning: 'اتحاد', note: 'ضم العناصر معاً في مجموعة واحدة.' },
+          'intersection': { meaning: 'تقاطع', note: 'العناصر المشتركة بين مجموعتين أو أكثر.' }
+        },
+        surpriseQuestions: [
+          {
+            prompt: 'ترجم أو اشرح كلمة (Intersection) خلال دقيقة واحدة:',
+            hint: 'تُستخدم في المجموعات والرياضيات بمعنى العناصر المشتركة.',
+            options: ['تقاطع (العناصر المشتركة)', 'اتحاد (ضم الكل)', 'مجموعة خالية'],
+            correct: 0,
+            modelAnswer: 'Intersection = تقاطع (العناصر المشتركة).'
+          },
+          {
+            prompt: 'ما معنى كلمة (Interval) في سياق الفترات والوقت؟',
+            hint: 'مدى أو فترة محصورة بين نقطتين.',
+            options: ['فترة / مجال', 'متممة', 'عدد صحيح'],
+            correct: 0,
+            modelAnswer: 'Interval = فترة أو مجال محصور بين حدين.'
+          }
+        ]
+      },
+      {
+        id: 'national',
+        name: 'الثقافة الوطنية',
+        kind: 'memorization',
+        icon: 'fa-flag',
+        accent: 'from-rose-500 to-pink-600',
+        sheet: {
+          title: 'شيت الثقافة الوطنية — ملخص، تعريفات، نظري، وأسئلة',
+          topics: 'جاهز لاستقبال صور الشيت لوضع التلخيص المبسط والشامل والتعريفات والنظري والأسئلة.'
+        },
+        summary: 'سيتم إدراج التلخيص المبسط والشامل لجميع معلومات صور شيت الثقافة الوطنية فور إرسالها.',
+        definitions: [],
+        theoryPoints: [],
+        questions: []
+      },
+      {
+        id: 'islamic',
+        name: 'الثقافة الإسلامية',
+        kind: 'memorization',
+        icon: 'fa-book-quran',
+        accent: 'from-amber-500 to-orange-600',
+        sheet: {
+          title: 'شيت الثقافة الإسلامية — ملخص، تعريفات، نظري، وأسئلة',
+          topics: 'جاهز لاستقبال صور الشيت لوضع التلخيص المبسط والشامل والتعريفات والنظري والأسئلة.'
+        },
+        summary: 'سيتم إدراج التلخيص المبسط والشامل لجميع معلومات صور شيت الثقافة الإسلامية فور إرسالها.',
+        definitions: [],
+        theoryPoints: [],
+        questions: []
+      },
+      {
+        id: 'arabic',
+        name: 'اللغة العربية',
+        kind: 'memorization',
+        icon: 'fa-feather-pointed',
+        accent: 'from-purple-500 to-fuchsia-600',
+        sheet: {
+          title: 'شيت اللغة العربية — ملخص، تعريفات، نظري، وأسئلة',
+          topics: 'جاهز لاستقبال صور الشيت لوضع التلخيص المبسط والشامل والتعريفات والنظري والأسئلة.'
+        },
+        summary: 'سيتم إدراج التلخيص المبسط والشامل لجميع معلومات صور شيت اللغة العربية فور إرسالها.',
+        definitions: [],
+        theoryPoints: [],
+        questions: []
+      }
+    ];
+
+    // =========================================================================
+    // 3. حالة التطبيق وحفظ الجلسة في localStorage
+    // =========================================================================
+    const STORAGE_KEY = 'techno_platform_pwa_otp_v2';
+
+    function defaultState() {
+      return {
+        studentName: '',
+        phoneCountry: '+218',
+        studentPhone: '',
+        otpChannel: 'WhatsApp',
+        otpContactTarget: '',
+        isVerified: false,
+        pendingOtpCode: '',
+        otpDispatchLog: [],
+        studyMode: 'detailed',
+        activeView: { kind: 'subject', id: 'math' },
+        subjectTab: 'foundation',
+        completedItems: {},
+        mistakes: [],
+        chatHistory: [
+          {
+            role: 'assistant',
+            text: 'أهلاً بك في منصة «تكنو»! اسألني عن أي فكرة في رياضة 1 (المجموعات، الفترات، الاتحاد ∪، التقاطع ∩، الفرق A-B، المكملة Aᶜ، مجموعة القوة P(A)، أو قوانين دي مورجان) أو عن واجباتك والمواد الأخرى.'
+          }
+        ],
+        reviews: [
+          {
+            name: 'طالب قسم عام',
+            rating: 5,
+            comment: 'الشرح واضح ومنظم جداً ويساعد على الفهم بسرعة قبل الامتحان.',
+            date: 'اليوم'
+          }
+        ],
+        customMedia: {
+          math: [],
+          physics: [],
+          english: [],
+          national: [],
+          islamic: [],
+          arabic: []
+        },
+        messages: [],
+        copyDeterrent: true
+      };
+    }
+
+    let state = loadState();
+    let selectedStarRating = 5;
+    let surpriseCountdown = 60;
+    let surpriseInterval = null;
+    let surpriseIndex = 0;
+    let voiceRecognition = null;
+    let isRecordingVoice = false;
+    let deferredPwaPrompt = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return defaultState();
+        return { ...defaultState(), ...JSON.parse(raw) };
+      } catch (e) {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toastBanner');
+      const txt = document.getElementById('toastText');
+      if (!el || !txt) return;
+      txt.textContent = msg;
+      el.classList.remove('opacity-0', 'translate-y-4');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        el.classList.add('opacity-0', 'translate-y-4');
+      }, 2800);
+    }
+
+    // =========================================================================
+    // 4. التهيئة، PWA، الأمان ورمز التحقق OTP، واسم الطالب ونمط الشرح
+    // =========================================================================
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        if (localStorage.getItem('techno_theme') === 'light') {
+          document.documentElement.classList.remove('dark');
+        }
+        if (typeof state.copyDeterrent !== 'boolean') state.copyDeterrent = true;
+        applyCopyDeterrent(state.copyDeterrent);
+        const detToggle = document.getElementById('deterrentToggle');
+        if (detToggle) detToggle.checked = state.copyDeterrent;
+
+        refreshHeaderAndGreeting();
+        renderSidebarNav();
+        renderReviewsUI();
+        renderWorkspace();
+        updateProgressUI();
+
+        if (!state.studentName && !state.isVerified) {
+          openSecurityGateModal();
+        }
+
+        setInterval(() => {
+          const modal = document.getElementById('englishSurpriseModal');
+          if (modal && modal.classList.contains('hidden')) {
+            openEnglishSurpriseModal();
+          }
+        }, 10 * 60 * 1000);
+      } catch (err) {
+        console.error('Initialization error:', err);
+      }
+    });
+
+    function triggerInstallGuide() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        deferredPwaPrompt.userChoice.then(() => {
+          deferredPwaPrompt = null;
+        });
+        return;
+      }
+      showToast('في Google Chrome: افتح قائمة المتصفح (⋮) واختر «إضافة إلى الشاشة الرئيسية» أو «تثبيت التطبيق»');
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('techno_theme', isDark ? 'dark' : 'light');
+    }
+
+    function openSecurityGateModal() {
+      const modal = document.getElementById('studentNameModal');
+      if (!modal) return;
+      document.getElementById('studentNameInput').value = state.studentName || '';
+      document.getElementById('phoneCountrySelect').value = state.phoneCountry || '+218';
+      document.getElementById('studentPhoneInput').value = state.studentPhone || '';
+      document.getElementById('otpChannelSelect').value = state.otpChannel || 'WhatsApp';
+      document.getElementById('studentContactTargetInput').value = state.otpContactTarget || '';
+      document.getElementById('otpCodeInput').value = '';
+      document.getElementById('otpStatusFeedback').textContent = state.isVerified
+        ? 'حالة الحساب: تم التحقق بنجاح.'
+        : 'أدخل رقم الهاتف واضغط «إرسال رمز التحقق (OTP)».';
+      modal.classList.remove('hidden');
+    }
+
+    function closeSecurityGateModal() {
+      const modal = document.getElementById('studentNameModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function sendOtpVerificationCode() {
+      const name = document.getElementById('studentNameInput').value.trim();
+      const country = document.getElementById('phoneCountrySelect').value;
+      const phone = document.getElementById('studentPhoneInput').value.trim();
+      const channel = document.getElementById('otpChannelSelect').value;
+      const target = document.getElementById('studentContactTargetInput').value.trim();
+
+      if (!phone) {
+        showToast('أدخل رقم الهاتف أولاً لإرسال رمز التحقق');
+        return;
+      }
+
+      const code = String(Math.floor(100000 + Math.random() * 900000));
+      const fullPhone = `${country}${phone.replace(/^0+/, '')}`;
+      state.studentName = name || state.studentName || 'طالب القسم العام';
+      state.phoneCountry = country;
+      state.studentPhone = phone;
+      state.otpChannel = channel;
+      state.otpContactTarget = target;
+      state.pendingOtpCode = code;
+
+      const messageBody = `رمز التحقق الخاص بمنصة تكنو (Techno) هو: ${code} (صالح لجلسة الدخول الحالية).`;
+      state.otpDispatchLog.unshift({
+        id: Date.now(),
+        channel,
+        recipient: target || fullPhone,
+        code,
+        time: new Date().toLocaleTimeString('ar-LY')
+      });
+      saveState();
+      refreshHeaderAndGreeting();
+
+      const preview = document.getElementById('otpDispatchPreview');
+      preview.classList.remove('hidden');
+      preview.innerHTML = `
+        <div class="font-extrabold text-sky-700 dark:text-sky-300">تم توليد رمز OTP عبر قناة (${channel}): <span class="font-mono text-sm underline">${code}</span></div>
+        <div class="text-[11px] text-slate-600 dark:text-slate-300">الوجهة المسجلة: <span class="math-ltr font-bold">${target || fullPhone}</span></div>
+      `;
+
+      const waLink = document.getElementById('whatsappDirectLink');
+      const waDigits = fullPhone.replace(/[^\d]/g, '');
+      waLink.href = `https://wa.me/${waDigits}?text=${encodeURIComponent(messageBody)}`;
+      waLink.classList.remove('hidden');
+
+      document.getElementById('otpCodeInput').value = code;
+      document.getElementById('otpStatusFeedback').textContent = `تم تعبئة الرمز (${code}) لتجربة التحقق الفوري أو يمكنك إدخاله يدوياً ثم الضغط على «تحقق ودخول».`;
+      showToast(`تم إرسال رمز التحقق OTP (${code}) عبر ${channel}`);
+    }
+
+    function verifyAndLoginStudent() {
+      const name = document.getElementById('studentNameInput').value.trim();
+      const enteredCode = document.getElementById('otpCodeInput').value.trim();
+      const expectedCode = state.pendingOtpCode;
+
+      if (!expectedCode) {
+        showToast('اضغط على «إرسال رمز التحقق (OTP)» أولاً');
+        return;
+      }
+      if (!enteredCode || enteredCode !== expectedCode) {
+        document.getElementById('otpStatusFeedback').textContent = 'رمز التحقق غير مطابق — تأكد من الرمز المكوّن من 6 أرقام.';
+        showToast('رمز التحقق غير صحيح');
+        return;
+      }
+
+      state.studentName = name || 'طالب القسم العام';
+      state.isVerified = true;
+      saveState();
+      closeSecurityGateModal();
+      refreshHeaderAndGreeting();
+      showToast(`مرحباً ${state.studentName}! تم التحقق والدخول بنجاح`);
+    }
+
+    function quickGuestLogin() {
+      state.studentName = state.studentName || 'زائر تجريبي';
+      state.isVerified = true;
+      saveState();
+      closeSecurityGateModal();
+      refreshHeaderAndGreeting();
+      showToast('تم الدخول السريع إلى منصة تكنو');
+    }
+
+    function logoutSession() {
+      state.studentName = '';
+      state.isVerified = false;
+      state.pendingOtpCode = '';
+      saveState();
+      refreshHeaderAndGreeting();
+      openSecurityGateModal();
+      showToast('تم تسجيل الخروج من الجلسة الحالية');
+    }
+
+    function refreshHeaderAndGreeting() {
+      const name = state.studentName || 'طالب القسم العام';
+      const verifiedTag = state.isVerified ? 'محقق ✓' : 'تجريبي';
+      const hdrName = document.getElementById('headerStudentName');
+      if (hdrName) hdrName.textContent = name;
+
+      const badge = document.getElementById('currentModeBadge');
+      if (badge) {
+        badge.textContent = `${state.studyMode === 'detailed' ? 'مفصل' : 'مكثف'} • ${verifiedTag}`;
+      }
+
+      const greetTitle = document.getElementById('technoGreetingTitle');
+      if (greetTitle) {
+        greetTitle.textContent = `أهلاً بك يا ${name}! أنا «تكنو» مساعدك الذكي.`;
+      }
+
+      const detBtn = document.getElementById('modeDetailedBtn');
+      const intBtn = document.getElementById('modeIntensiveBtn');
+      if (detBtn && intBtn) {
+        if (state.studyMode === 'detailed') {
+          detBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-white text-slate-900 shadow-md';
+          intBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/25';
+        } else {
+          intBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-amber-400 text-slate-950 shadow-md';
+          detBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/25';
+        }
+      }
+    }
+
+    function setStudyMode(mode) {
+      state.studyMode = mode === 'intensive' ? 'intensive' : 'detailed';
+      saveState();
+      refreshHeaderAndGreeting();
+      renderWorkspace();
+      showToast(state.studyMode === 'detailed' ? 'تم التفعيل: شرح مفصل وواضح' : 'تم التفعيل: شرح مكثف سريع (لمدة يوم)');
+    }
+
+    // =========================================================================
+    // 5. التنقل والتقدم
+    // =========================================================================
+    function renderSidebarNav() {
+      const nav = document.getElementById('subjectsNavList');
+      if (!nav) return;
+      nav.innerHTML = SUBJECTS.map(sub => {
+        const isActive = state.activeView.kind === 'subject' && state.activeView.id === sub.id;
+        return `
+          <button type="button" onclick="selectSubject('${sub.id}')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold transition ${
+            isActive
+              ? 'bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/30'
+              : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70'
+          }">
+            <span class="flex items-center gap-2.5 truncate">
+              <i class="fa-solid ${sub.icon} text-sky-500 w-4"></i>
+              <span class="truncate">${sub.name}</span>
+            </span>
+            <span id="subPct-${sub.id}" class="text-[11px] font-extrabold opacity-80">0%</span>
+          </button>
+        `;
+      }).join('');
+      updateProgressUI();
+    }
+
+    function selectSubject(subjectId) {
+      state.activeView = { kind: 'subject', id: subjectId };
+      const sub = SUBJECTS.find(s => s.id === subjectId) || SUBJECTS[0];
+      if (sub.kind === 'quantitative') state.subjectTab = 'foundation';
+      else if (sub.kind === 'english') state.subjectTab = 'english';
+      else state.subjectTab = 'memorization';
+      saveState();
+      renderSidebarNav();
+      renderWorkspace();
+    }
+
+    function openWorkspaceTab(viewName) {
+      state.activeView = { kind: viewName, id: null };
+      saveState();
+      renderSidebarNav();
+      renderWorkspace();
+    }
+
+    function markCompleted(key, label = 'تم تسجيل الإنجاز') {
+      state.completedItems[key] = true;
+      saveState();
+      updateProgressUI();
+      showToast(label);
+    }
+
+    function updateProgressUI() {
+      const totalTargets = SUBJECTS.length * 2;
+      let done = 0;
+      SUBJECTS.forEach(sub => {
+        let subDone = 0;
+        if (state.completedItems[`sheet_${sub.id}`]) { done++; subDone++; }
+        if (state.completedItems[`practice_${sub.id}`]) { done++; subDone++; }
+        const pct = Math.round((subDone / 2) * 100);
+        const el = document.getElementById(`subPct-${sub.id}`);
+        if (el) el.textContent = `${pct}%`;
+      });
+
+      const globalPct = Math.round((done / totalTargets) * 100);
+      const pctTxt = document.getElementById('globalProgressText');
+      const pctBar = document.getElementById('globalProgressBar');
+      if (pctTxt) pctTxt.textContent = `${globalPct}%`;
+      if (pctBar) pctBar.style.width = `${globalPct}%`;
+
+      const mCount = state.mistakes.length;
+      const mBadge = document.getElementById('mistakesCountBadge');
+      const sMistakes = document.getElementById('sideMistakesNum');
+      const sMsgs = document.getElementById('sideMessagesNum');
+      if (mBadge) mBadge.textContent = `${mCount} أخطاء`;
+      if (sMistakes) sMistakes.textContent = mCount;
+      if (sMsgs) sMsgs.textContent = state.messages.length;
+    }
+
+    // =========================================================================
+    // 6. عرض مساحة العمل
+    // =========================================================================
+    function renderWorkspace() {
+      const container = document.getElementById('dynamicWorkspace');
+      if (!container) return;
+      if (state.activeView.kind === 'chat') {
+        container.innerHTML = renderTechnoChatHTML();
+        return;
+      }
+      if (state.activeView.kind === 'mistakes') {
+        container.innerHTML = renderMistakesBankHTML();
+        return;
+      }
+      if (state.activeView.kind === 'homework') {
+        container.innerHTML = renderHomeworkHTML();
+        return;
+      }
+      if (state.activeView.kind === 'inbox') {
+        container.innerHTML = renderInboxHTML();
+        return;
+      }
+
+      const sub = SUBJECTS.find(s => s.id === state.activeView.id) || SUBJECTS[0];
+      container.innerHTML = renderSubjectWorkspaceHTML(sub);
+    }
+
+    function renderSubjectWorkspaceHTML(sub) {
+      const isIntensive = state.studyMode === 'intensive';
+      let tabs = [];
+
+      if (sub.kind === 'quantitative') {
+        tabs = [
+          { id: 'foundation', label: 'التأسيس والقوانين (5 أمثلة)', icon: 'fa-layer-group' },
+          { id: 'explanation', label: 'الشرح والفيديو (10 أمثلة)', icon: 'fa-chalkboard-user' },
+          { id: 'sheet', label: 'الشيت وتشخيص المشاكل', icon: 'fa-file-lines' },
+          { id: 'midterm', label: 'اختبار النصفي (30 درجة)', icon: 'fa-award' }
+        ];
+      } else if (sub.kind === 'english') {
+        tabs = [
+          { id: 'english', label: 'القواعد، المترجم، والفويس', icon: 'fa-language' },
+          { id: 'sheet', label: 'الشيت وتشخيص المشاكل', icon: 'fa-file-lines' }
+        ];
+      } else {
+        tabs = [
+          { id: 'memorization', label: 'الملخص، التعريفات، والنظري', icon: 'fa-book-bookmark' },
+          { id: 'sheet', label: 'الشيت وتشخيص المشاكل', icon: 'fa-file-lines' }
+        ];
+      }
+
+      if (!tabs.some(t => t.id === state.subjectTab)) {
+        state.subjectTab = tabs[0].id;
+      }
+
+      const tabsHtml = tabs.map(t => {
+        const active = state.subjectTab === t.id;
+        return `
+          <button type="button" onclick="switchSubjectTab('${t.id}')" class="px-3.5 py-2.5 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 whitespace-nowrap ${
+            active
+              ? 'bg-slate-900 text-white dark:bg-sky-500 dark:text-slate-950 shadow-sm'
+              : 'bg-slate-100 dark:bg-slate-900/70 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800'
+          }">
+            <i class="fa-solid ${t.icon}"></i>
+            <span>${t.label}</span>
+          </button>
+        `;
+      }).join('');
+
+      let bodyHtml = '';
+      if (state.subjectTab === 'sheet') bodyHtml = renderSheetDiagnosticHTML(sub);
+      else if (state.subjectTab === 'foundation') bodyHtml = renderQuantitativeFoundationHTML(sub, isIntensive);
+      else if (state.subjectTab === 'explanation') bodyHtml = renderQuantitativeExplanationHTML(sub, isIntensive);
+      else if (state.subjectTab === 'midterm') bodyHtml = renderMidterm30HTML(sub);
+      else if (state.subjectTab === 'english') bodyHtml = renderEnglishModuleHTML(sub);
+      else if (state.subjectTab === 'memorization') bodyHtml = renderMemorizationModuleHTML(sub);
+
+      return `
+        <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${sub.accent} text-white flex items-center justify-center text-xl shadow-md">
+                <i class="fa-solid ${sub.icon}"></i>
+              </div>
+              <div>
+                <h2 class="font-heading font-extrabold text-xl">${sub.name}</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">${sub.sheet.title}</p>
+              </div>
+            </div>
+            <span class="self-start sm:self-auto px-3 py-1 rounded-full text-[11px] font-extrabold ${
+              isIntensive
+                ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
+                : 'bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/30'
+            }">
+              ${isIntensive ? 'وضع مكثف (امتحان غداً)' : 'وضع مفصل وواضح'}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2 overflow-x-auto pb-1">${tabsHtml}</div>
+          <div class="pt-1">${bodyHtml}</div>
+        </div>
+      `;
+    }
+
+    function switchSubjectTab(tabId) {
+      state.subjectTab = tabId;
+      saveState();
+      renderWorkspace();
+    }
+
+    // -----------------------------------------------------------------------
+    // أ) الشيت ولائحة تشخيص المشاكل
+    // -----------------------------------------------------------------------
+    function renderSheetDiagnosticHTML(sub) {
+      return `
+        <div class="space-y-5">
+          <div class="rounded-2xl bg-slate-50 dark:bg-slate-900/70 p-4 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="text-[11px] font-extrabold text-sky-600 dark:text-sky-400">شيت مستقل</span>
+              <h3 class="font-heading font-bold text-base mt-0.5">${sub.sheet.title}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">المحاور: ${sub.sheet.topics}</p>
+            </div>
+            <button type="button" onclick="markCompleted('sheet_${sub.id}', 'تم اعتماد مراجعة الشيت')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0 transition">
+              <i class="fa-solid fa-check"></i> تم مراجعة الشيت
+            </button>
+          </div>
+
+          <div class="rounded-2xl border border-indigo-500/30 bg-indigo-500/5 p-4 sm:p-5 space-y-3">
+            <div class="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-extrabold text-sm">
+              <i class="fa-solid fa-stethoscope"></i>
+              <span>لائحة تشخيص المشاكل — ما المشكلة التي تواجهك في هذا الشيت يا ${state.studentName || 'بطل'}؟</span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-300">اختر المشكلة التي تعاني منها ليوجّهك «تكنو» مباشرة إلى المسار الأنسب:</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <button type="button" onclick="diagnoseSheetProblem('${sub.id}', 'understanding')" class="text-right p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 transition space-y-1">
+                <div class="font-extrabold text-xs text-sky-600 dark:text-sky-400">1. مشكلة في الفهم وتصور الفكرة</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">أحتاج شرحاً يوضح الفكرة الأساسية والرموز من البداية.</div>
+              </button>
+
+              <button type="button" onclick="diagnoseSheetProblem('${sub.id}', 'laws')" class="text-right p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition space-y-1">
+                <div class="font-extrabold text-xs text-indigo-600 dark:text-indigo-400">2. مشكلة في القوانين والعمليات ومتى تُستخدم</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">أحتاج معرفة متى أستخدم ∪، ∩، Aᶜ، الفرق، أو الفترات.</div>
+              </button>
+
+              <button type="button" onclick="diagnoseSheetProblem('${sub.id}', 'memorize')" class="text-right p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-amber-500 transition space-y-1">
+                <div class="font-extrabold text-xs text-amber-600 dark:text-amber-400">3. مشكلة في الحفظ أو التمييز بين الرموز</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">أحتاج توضيحاً سريعاً يجنّبني اللبس بين الرموز.</div>
+              </button>
+
+              <button type="button" onclick="diagnoseSheetProblem('${sub.id}', 'exam')" class="text-right p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition space-y-1">
+                <div class="font-extrabold text-xs text-emerald-600 dark:text-emerald-400">4. أريد اختبار نفسي للامتحان النصفي</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">أريد قياس مستواي من 30 درجة وفرز أخطائي وشرحها.</div>
+              </button>
+            </div>
+
+            <div id="diagnosticResponseBox" class="hidden rounded-2xl bg-white dark:bg-slate-900 border border-sky-500/40 p-4 text-xs leading-relaxed space-y-2"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function diagnoseSheetProblem(subjectId, problemType) {
+      const sub = SUBJECTS.find(s => s.id === subjectId) || SUBJECTS[0];
+      const box = document.getElementById('diagnosticResponseBox');
+      if (!box) return;
+      box.classList.remove('hidden');
+
+      let advice = '';
+      let actionBtn = '';
+
+      if (problemType === 'understanding') {
+        advice = `<strong>توجيه تكنو:</strong> نبدأ بالفكرة الأساسية والمفاهيم بأسلوب واضح ثم ننتقل إلى الـ 10 أمثلة خطوة بخطوة.`;
+        actionBtn = sub.kind === 'quantitative'
+          ? `<button type="button" onclick="switchSubjectTab('explanation')" class="px-3 py-1.5 rounded-xl bg-sky-600 text-white font-bold">اذهب إلى الشرح و10 أمثلة</button>`
+          : sub.kind === 'english'
+          ? `<button type="button" onclick="switchSubjectTab('english')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">اذهب إلى القواعد والمترجم</button>`
+          : `<button type="button" onclick="switchSubjectTab('memorization')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold">اذهب إلى الملخص والنظري</button>`;
+      } else if (problemType === 'laws') {
+        advice = `<strong>توجيه تكنو:</strong> ركّز على خانة <strong>التأسيس والقوانين</strong> لمعرفة متى يُستخدم كل قانون/عملية وشروطها مع 5 أمثلة تأسيسية.`;
+        actionBtn = sub.kind === 'quantitative'
+          ? `<button type="button" onclick="switchSubjectTab('foundation')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold">افتح التأسيس والقوانين</button>`
+          : `<button type="button" onclick="switchSubjectTab('memorization')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold">افتح الملخص والقواعد</button>`;
+      } else if (problemType === 'memorize') {
+        advice = sub.id === 'math'
+          ? `<strong>تنبيه مهم لمادة الرياضيات:</strong> النظري في الرياضيات هو <strong>للشرح والفهم فقط</strong> وليس للحفظ! ركّز على فهم القوانين والرموز وحل الأمثلة.`
+          : `<strong>توجيه تكنو:</strong> استخدم الأدوات المخصصة للمادة لتثبيت الفهم والحفظ بسهولة.`;
+        actionBtn = sub.kind === 'english'
+          ? `<button type="button" onclick="switchSubjectTab('english')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">افتح المترجم والفويس</button>`
+          : sub.kind === 'memorization'
+          ? `<button type="button" onclick="switchSubjectTab('memorization')" class="px-3 py-1.5 rounded-xl bg-amber-600 text-white font-bold">افتح التلخيص والتعريفات</button>`
+          : `<button type="button" onclick="switchSubjectTab('foundation')" class="px-3 py-1.5 rounded-xl bg-sky-600 text-white font-bold">افتح القوانين المهمة</button>`;
+      } else {
+        advice = `<strong>توجيه تكنو:</strong> اختبر نفسك في اختبار النصفي من 30 درجة لفرز الأخطاء ومعرفة سببها فوراً.`;
+        actionBtn = sub.kind === 'quantitative' && sub.midterm30.length > 0
+          ? `<button type="button" onclick="switchSubjectTab('midterm')" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">ابدأ اختبار النصفي (30 درجة)</button>`
+          : `<button type="button" onclick="openEnglishSurpriseModal()" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">جرّب سؤالاً سريعاً الآن</button>`;
+      }
+
+      box.innerHTML = `<p>${advice}</p><div class="pt-1">${actionBtn}</div>`;
+    }
+
+    // -----------------------------------------------------------------------
+    // ب) التأسيس والقوانين + شرح متى يُستخدم + 5 أمثلة تأسيسية لكل قانون
+    // -----------------------------------------------------------------------
+    function renderQuantitativeFoundationHTML(sub, isIntensive) {
+      if (!sub.formulas || sub.formulas.length === 0) {
+        return `<div class="rounded-2xl bg-slate-50 dark:bg-slate-900/70 p-5 text-xs text-slate-500 dark:text-slate-400">${sub.understandingNote.text}</div>`;
+      }
+
+      const theoryBanner = `
+        <div class="rounded-2xl bg-sky-500/10 border border-sky-500/30 p-4 text-xs text-sky-900 dark:text-sky-200 leading-relaxed">
+          <div class="font-extrabold mb-1"><i class="fa-solid fa-circle-info"></i> ${sub.understandingNote.title}</div>
+          <p>${sub.understandingNote.text}</p>
+        </div>
+      `;
+
+      const formulasCards = sub.formulas.map((f, fIdx) => {
+        const examplesToShow = isIntensive ? f.foundationExamples.slice(0, 2) : f.foundationExamples;
+        const exHtml = examplesToShow.map((ex, i) => `
+          <div class="rounded-xl bg-slate-50 dark:bg-slate-900/85 p-3 border border-slate-200/80 dark:border-slate-800 space-y-1">
+            <div class="font-bold text-xs text-slate-800 dark:text-slate-100">مثال تأسيسي ${i + 1}: ${ex.q}</div>
+            <div class="text-[11px] text-slate-600 dark:text-slate-400">الخطوات: ${ex.steps}</div>
+            <div class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400">الناتج: ${ex.ans}</div>
+          </div>
+        `).join('');
+
+        return `
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 space-y-4 bg-white dark:bg-slate-900/40">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-xs font-extrabold">${f.code}</span>
+                <h4 class="font-heading font-extrabold text-base">${f.name}</h4>
+              </div>
+              ${f.examImportant ? `<span class="px-3 py-1 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-300 border border-rose-500/30 text-[11px] font-extrabold">مهم للامتحان ⚠️</span>` : ''}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-900 text-sky-300 math-ltr text-xs sm:text-sm text-center font-bold overflow-x-auto">
+              ${f.formula}
+            </div>
+
+            <div class="rounded-2xl bg-amber-500/10 border border-amber-500/25 p-3.5 text-xs leading-relaxed">
+              <span class="font-extrabold text-amber-700 dark:text-amber-300"><i class="fa-solid fa-circle-question"></i> متى يُستخدم هذا القانون/الرمز وشروطه؟</span>
+              <p class="mt-1 text-slate-700 dark:text-slate-300">${f.whenToUse}</p>
+            </div>
+
+            <div class="space-y-2">
+              <div class="text-xs font-extrabold text-slate-600 dark:text-slate-300">
+                أمثلة تأسيسية متدرجة ${isIntensive ? '(أبرز الأمثلة في الوضع المكثف)' : '(5 أمثلة تأسيسية)'}:
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                ${exHtml}
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-slate-600 dark:text-slate-300">هل الفكرة وطريقة استخدامها واضحة الآن؟</span>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="handleUnderstandingCheck('${sub.id}', ${fIdx}, true)" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">نعم، واضح</button>
+                <button type="button" onclick="handleUnderstandingCheck('${sub.id}', ${fIdx}, false)" class="px-3 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-300 border border-rose-500/30 text-xs font-bold transition">لا، بسّطه لي أكثر</button>
+              </div>
+            </div>
+            <div id="under-box-${sub.id}-${fIdx}" class="hidden rounded-2xl p-3.5 text-xs leading-relaxed bg-sky-500/10 border border-sky-500/30"></div>
+          </div>
+        `;
+      }).join('');
+
+      return `<div class="space-y-4">${theoryBanner}${formulasCards}</div>`;
+    }
+
+    function handleUnderstandingCheck(subjectId, fIdx, isClear) {
+      const sub = SUBJECTS.find(s => s.id === subjectId) || SUBJECTS[0];
+      const box = document.getElementById(`under-box-${subjectId}-${fIdx}`);
+      if (!box) return;
+      box.classList.remove('hidden');
+
+      if (isClear) {
+        box.className = 'rounded-2xl p-3.5 text-xs leading-relaxed bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200';
+        box.innerHTML = `<strong>ممتاز يا ${state.studentName || 'بطل'}!</strong> انتقل الآن إلى خانة الـ 10 أمثلة أو اختبار النصفي من 30 درجة.`;
+      } else {
+        box.className = 'rounded-2xl p-3.5 text-xs leading-relaxed bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200';
+        box.innerHTML = `
+          <div class="font-extrabold mb-1"><i class="fa-solid fa-wand-magic-sparkles"></i> تبسيط إضافي من «تكنو»:</div>
+          <p>${sub.easierFollowUp.simplified}</p>
+          <p class="mt-1.5 font-bold">مثال أبسط بنفس الفكرة: ${sub.easierFollowUp.easyExample}</p>
+        `;
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // ج) الشرح والدرس (10 أمثلة من الشيت وإجاباته + إضافة فيديوهاتك وصورك وشرحك)
+    // -----------------------------------------------------------------------
+    function renderQuantitativeExplanationHTML(sub, isIntensive) {
+      if (!sub.tenExamples || sub.tenExamples.length === 0) {
+        return `<div class="rounded-2xl bg-slate-50 dark:bg-slate-900/70 p-5 text-xs text-slate-500 dark:text-slate-400">سيتم عرض الأمثلة فور إرسال أوراق المادة.</div>`;
+      }
+
+      const list = isIntensive ? sub.tenExamples.slice(0, 5) : sub.tenExamples;
+      const examplesHtml = list.map((item, idx) => `
+        <div class="rounded-2xl bg-slate-50 dark:bg-slate-900/75 p-4 border border-slate-200 dark:border-slate-800 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-extrabold text-xs text-sky-600 dark:text-sky-400">${item.title}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 font-bold">#${idx + 1}</span>
+          </div>
+          <div class="text-xs font-bold text-slate-800 dark:text-slate-100">المسألة: ${item.problem}</div>
+          <div class="text-xs text-emerald-700 dark:text-emerald-300 font-semibold leading-relaxed">الحل: ${item.solution}</div>
+        </div>
+      `).join('');
+
+      const userMediaList = state.customMedia[sub.id] || [];
+      const userMediaHtml = userMediaList.map(m => `
+        <div class="rounded-2xl border border-indigo-500/30 bg-indigo-500/5 p-4 space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white text-[10px] font-extrabold">عنوان وملخص مستخرج من كلام الفيديو</span>
+            <span class="text-[11px] text-slate-400">${m.date}</span>
+          </div>
+          <h5 class="font-heading font-extrabold text-sm text-indigo-700 dark:text-indigo-300">${m.autoTitle}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-300"><strong>ملخص الشرح:</strong> ${m.autoSummary}</p>
+          ${m.notes ? `<p class="text-xs text-slate-700 dark:text-slate-200 bg-white/70 dark:bg-slate-900/70 p-2.5 rounded-xl"><strong>شرحك وملاحظاتك:</strong> ${m.notes}</p>` : ''}
+          ${m.imageUrl ? `<img src="${m.imageUrl}" alt="${m.autoTitle}" onerror="this.src='https://placehold.co/600x260/1e293b/38bdf8?text=صورة+الورق+أو+الشرح'" class="w-full max-h-60 object-cover rounded-xl border border-slate-200 dark:border-slate-700" />` : ''}
+          ${m.videoUrl ? `<div class="text-xs"><span class="font-bold text-sky-600 dark:text-sky-400">رابط الفيديو:</span> <a href="${m.videoUrl}" target="_blank" rel="noopener noreferrer" class="underline break-all">${m.videoUrl}</a></div>` : ''}
+        </div>
+      `).join('');
+
+      return `
+        <div class="space-y-6">
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="font-heading font-extrabold text-base">
+                أمثلة بنفس أفكار الشيت وإجاباته (${isIntensive ? '5 أمثلة مكثفة' : '10 أمثلة من ص1 إلى ص10'})
+              </h3>
+              <button type="button" onclick="markCompleted('practice_${sub.id}', 'تم إتمام مراجعة الـ 10 أمثلة')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">
+                <i class="fa-solid fa-check"></i> أنهيت الأمثلة
+              </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${examplesHtml}</div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 bg-slate-50 dark:bg-slate-900/50 space-y-4">
+            <div>
+              <h4 class="font-heading font-extrabold text-sm text-sky-600 dark:text-sky-400">
+                <i class="fa-solid fa-video"></i> أضف شرحك، صور الورق، وفيديوهاتك (يستخرج «تكنو» عنوان الدرس وملخصه من كلام الفيديو)
+              </h4>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                اكتب نص كلامك/شرحك في الفيديو أو ملاحظاتك، وسيقوم «تكنو» بصياغة عنوان درس وملخص واضح تلقائياً.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input id="mediaVideoInput" type="text" placeholder="رابط الفيديو (اختياري)" class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              <input id="mediaImageInput" type="text" placeholder="رابط صورة الورق أو الحل (اختياري)" class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+            </div>
+
+            <textarea id="mediaTranscriptInput" rows="3" placeholder="اكتب هنا الكلام الذي شرحته في الفيديو أو شرحك التفصيلي للدرس..." class="w-full rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+
+            <button type="button" onclick="addCustomLessonMedia('${sub.id}')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-extrabold transition flex items-center gap-2">
+              <i class="fa-solid fa-plus-circle"></i> توليد العنوان والملخص وإضافة الشرح
+            </button>
+
+            <div class="space-y-3 pt-2">${userMediaHtml}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function addCustomLessonMedia(subjectId) {
+      const videoUrl = document.getElementById('mediaVideoInput').value.trim();
+      const imageUrl = document.getElementById('mediaImageInput').value.trim();
+      const notes = document.getElementById('mediaTranscriptInput').value.trim();
+
+      if (!notes && !videoUrl && !imageUrl) {
+        showToast('اكتب شرحك أو أضف رابط صورة/فيديو أولاً');
+        return;
+      }
+
+      const words = notes.replace(/[^\u0600-\u06FFa-zA-Z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+      const autoTitle = words.length > 0
+        ? `درس: ${words.slice(0, 6).join(' ')}${words.length > 6 ? '...' : ''}`
+        : 'درس مضاف بواسطة الطالب';
+
+      const autoSummary = notes.length > 0
+        ? (notes.length > 150 ? `${notes.slice(0, 150)}...` : notes)
+        : 'تم إرفاق مادة مرئية/صورة للشرح والمراجعة.';
+
+      state.customMedia[subjectId].unshift({
+        id: Date.now(),
+        autoTitle,
+        autoSummary,
+        notes,
+        videoUrl,
+        imageUrl,
+        date: new Date().toLocaleDateString('ar-LY')
+      });
+      saveState();
+      renderWorkspace();
+      showToast('تم استخراج العنوان والملخص وإضافة الشرح');
+    }
+
+    // -----------------------------------------------------------------------
+    // د) اختبار محاكاة الامتحان النصفي من 30 درجة + فرز الأخطاء وشرحها
+    // -----------------------------------------------------------------------
+    function renderMidterm30HTML(sub) {
+      if (!sub.midterm30 || sub.midterm30.length === 0) {
+        return `<div class="rounded-2xl bg-slate-50 dark:bg-slate-900/70 p-5 text-xs text-slate-500 dark:text-slate-400">سيتم تفعيل اختبار الـ 30 درجة لهذه المادة فور إرسال أوراقها.</div>`;
+      }
+
+      const itemsHtml = sub.midterm30.map((q, idx) => `
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900/60 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">سؤال ${idx + 1} (${q.category})</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 text-[11px] font-extrabold">${q.points} درجات</span>
+          </div>
+          <p class="font-bold text-xs sm:text-sm">${q.question}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.options.map((opt, oIdx) => `
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs hover:border-sky-500 transition">
+                <input type="radio" name="midterm_${sub.id}_${q.id}" value="${oIdx}" class="accent-sky-600" />
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-indigo-500/10 border border-indigo-500/30 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="font-heading font-extrabold text-base text-indigo-700 dark:text-indigo-300">محاكاة الامتحان النصفي (المجموع الكلي: 30 درجة)</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">بعد التسليم يحسب «تكنو» درجتك من 30، يفرز أخطاءك، ويشرح سبب كل خطأ بالتفصيل.</p>
+            </div>
+            <button type="button" onclick="gradeMidterm30('${sub.id}')" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-md shrink-0 transition">
+              <i class="fa-solid fa-check-double"></i> تسليم وتصحيح (من 30)
+            </button>
+          </div>
+
+          <div class="space-y-3">${itemsHtml}</div>
+          <div id="midtermReportBox" class="hidden space-y-4 pt-2"></div>
+        </div>
+      `;
+    }
+
+    function gradeMidterm30(subjectId) {
+      const sub = SUBJECTS.find(s => s.id === subjectId) || SUBJECTS[0];
+      let score = 0;
+      const errors = [];
+
+      sub.midterm30.forEach(q => {
+        const checked = document.querySelector(`input[name="midterm_${sub.id}_${q.id}"]:checked`);
+        const chosenIdx = checked ? Number(checked.value) : -1;
+        if (chosenIdx === q.correct) {
+          score += q.points;
+        } else {
+          const chosenText = chosenIdx >= 0 ? q.options[chosenIdx] : 'لم يتم اختيار إجابة';
+          const correctText = q.options[q.correct];
+          errors.push({ q, chosenText, correctText });
+
+          if (!state.mistakes.some(m => m.id === q.id)) {
+            state.mistakes.push({
+              id: q.id,
+              subjectId: sub.id,
+              subjectName: sub.name,
+              category: q.category,
+              question: q.question,
+              options: q.options,
+              correctIndex: q.correct,
+              correctAnswer: correctText,
+              diagnosis: q.diagnosis,
+              explanation: q.detailedExplanation
+            });
+          }
+        }
+      });
+
+      saveState();
+      updateProgressUI();
+
+      const reportBox = document.getElementById('midtermReportBox');
+      if (!reportBox) return;
+      reportBox.classList.remove('hidden');
+
+      const errorsHtml = errors.length === 0
+        ? `<div class="rounded-2xl bg-emerald-500/15 border border-emerald-500/30 p-4 text-xs font-extrabold text-emerald-700 dark:text-emerald-300">
+             ممتاز جداً! أغلقت الدرجة كاملة (30 / 30) دون أي أخطاء في هذه المحاكاة.
+           </div>`
+        : errors.map((err, i) => `
+            <div class="rounded-2xl border border-rose-500/30 bg-rose-500/5 p-4 space-y-2 text-xs">
+              <div class="font-extrabold text-rose-700 dark:text-rose-300">خطأ ${i + 1}: ${err.q.question}</div>
+              <div class="flex flex-wrap gap-3 text-[11px]">
+                <span class="px-2.5 py-1 rounded-lg bg-rose-500/15 text-rose-700 dark:text-rose-300 font-bold">إجابتك: ${err.chosenText}</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold">الصحيح: ${err.correctText}</span>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25">
+                <strong class="text-amber-700 dark:text-amber-300">فرز المشكلة (سبب الخطأ):</strong>
+                <p class="mt-0.5 text-slate-700 dark:text-slate-200">${err.q.diagnosis}</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <strong class="text-sky-600 dark:text-sky-400">شرح تفصيلي للاستيعاب:</strong>
+                <p class="mt-0.5 text-slate-700 dark:text-slate-300">${err.q.detailedExplanation}</p>
+              </div>
+            </div>
+          `).join('');
+
+      reportBox.innerHTML = `
+        <div class="rounded-3xl border border-sky-500/30 bg-slate-50 dark:bg-slate-900 p-5 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="text-xs text-slate-500 dark:text-slate-400">نتيجتك النهائية في اختبار ${sub.name}</span>
+              <div class="font-heading font-extrabold text-2xl text-sky-600 dark:text-sky-400">${score} / 30 درجة</div>
+            </div>
+            <button type="button" onclick="openWorkspaceTab('mistakes')" class="px-3.5 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-extrabold">
+              فتح بنك أخطائي (${state.mistakes.length})
+            </button>
+          </div>
+          <div class="space-y-3">${errorsHtml}</div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // هـ) اللغة الإنجليزية: قواعد + أمثلة حياتية + مترجم ذكي + فويس مفاجئ
+    // -----------------------------------------------------------------------
+    function renderEnglishModuleHTML(sub) {
+      const grammarHtml = sub.grammarLessons.map(g => `
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-900/50 space-y-3">
+          <h4 class="font-heading font-extrabold text-sm text-emerald-600 dark:text-emerald-400">${g.ruleTitle}</h4>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${g.simpleExplanation}</p>
+          <div class="space-y-2">
+            <div class="text-[11px] font-extrabold text-slate-500 dark:text-slate-400">أمثلة من الحياة اليومية:</div>
+            ${g.lifeExamples.map(ex => `
+              <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
+                <span class="font-mono font-bold text-sky-600 dark:text-sky-300 math-ltr text-left">${ex.en}</span>
+                <span class="text-slate-600 dark:text-slate-300">${ex.ar}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <div class="space-y-5">
+          <div class="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="text-xs space-y-0.5">
+              <div class="font-extrabold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-bell"></i> نظام الأسئلة المفاجئة (كل 10 دقائق — إجابة خلال دقيقة بالفويس)
+              </div>
+              <p class="text-slate-600 dark:text-slate-300">يظهر سؤال مفاجئ تلقائياً كل 10 دقائق لتثبيت الحفظ، ويمكنك تجربته الآن فوراً.</p>
+            </div>
+            <button type="button" onclick="openEnglishSurpriseModal()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shrink-0 transition">
+              <i class="fa-solid fa-microphone"></i> تجربة سؤال مفاجئ الآن
+            </button>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900/60 space-y-3">
+            <h4 class="font-heading font-extrabold text-sm text-sky-600 dark:text-sky-400">
+              <i class="fa-solid fa-language"></i> المترجم الذكي للكلمات الصعبة
+            </h4>
+            <div class="flex flex-wrap gap-1.5">
+              ${Object.keys(sub.dictionary).map(w => `
+                <button type="button" onclick="translateEnglishWord('${w}')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-mono font-bold hover:border-sky-500 transition">${w}</button>
+              `).join('')}
+            </div>
+            <div class="flex gap-2">
+              <input id="smartTranslateInput" type="text" placeholder="اكتب كلمة إنجليزية هنا..." class="flex-grow rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              <button type="button" onclick="translateEnglishWord()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-extrabold transition">ترجم واشرح</button>
+            </div>
+            <div id="smartTranslateResult" class="hidden rounded-xl bg-white dark:bg-slate-800 border border-sky-500/30 p-3 text-xs leading-relaxed"></div>
+          </div>
+
+          <div class="space-y-3">${grammarHtml}</div>
+        </div>
+      `;
+    }
+
+    function translateEnglishWord(presetWord = '') {
+      const engSub = SUBJECTS.find(s => s.id === 'english');
+      const inputEl = document.getElementById('smartTranslateInput');
+      if (presetWord && inputEl) inputEl.value = presetWord;
+      const raw = (inputEl ? inputEl.value : presetWord).trim().toLowerCase();
+      const resEl = document.getElementById('smartTranslateResult');
+      if (!raw || !resEl) return;
+
+      resEl.classList.remove('hidden');
+      const found = engSub.dictionary[raw];
+      if (found) {
+        resEl.innerHTML = `<div class="font-extrabold text-sky-600 dark:text-sky-400">${raw} ← ${found.meaning}</div><p class="mt-1 text-slate-600 dark:text-slate-300">${found.note}</p>`;
+      } else {
+        resEl.innerHTML = `<div class="font-bold text-indigo-600 dark:text-indigo-300">الكلمة: "${raw}"</div><p class="mt-1 text-slate-600 dark:text-slate-300">يمكنك إرسالها في خانة الاستفسارات لأشرحها لك بتفصيل أكثر.</p>`;
+      }
+    }
+
+    function openEnglishSurpriseModal() {
+      const engSub = SUBJECTS.find(s => s.id === 'english');
+      const q = engSub.surpriseQuestions[surpriseIndex % engSub.surpriseQuestions.length];
+      surpriseIndex++;
+
+      document.getElementById('surpriseQuestionPrompt').textContent = q.prompt;
+      document.getElementById('surpriseQuestionHint').textContent = `تلميح: ${q.hint}`;
+      document.getElementById('surpriseVoiceAnswer').value = '';
+      document.getElementById('surpriseResultBox').classList.add('hidden');
+
+      document.getElementById('surpriseOptionsBox').innerHTML = q.options.map((opt, idx) => `
+        <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 cursor-pointer text-xs">
+          <input type="radio" name="surpriseOpt" value="${idx}" class="accent-emerald-600" />
+          <span>${opt}</span>
+        </label>
+      `).join('');
+
+      document.getElementById('englishSurpriseModal').classList.remove('hidden');
+
+      surpriseCountdown = 60;
+      document.getElementById('surpriseTimerText').textContent = surpriseCountdown;
+      clearInterval(surpriseInterval);
+      surpriseInterval = setInterval(() => {
+        surpriseCountdown--;
+        const tEl = document.getElementById('surpriseTimerText');
+        if (tEl) tEl.textContent = Math.max(0, surpriseCountdown);
+        if (surpriseCountdown <= 0) {
+          clearInterval(surpriseInterval);
+          submitSurpriseAnswer();
+        }
+      }, 1000);
+    }
+
+    function closeSurpriseModal() {
+      clearInterval(surpriseInterval);
+      stopVoiceIfActive();
+      const modal = document.getElementById('englishSurpriseModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function toggleVoiceCapture() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const targetTextarea = document.getElementById('surpriseVoiceAnswer');
+
+      if (!SpeechRec) {
+        if (targetTextarea) targetTextarea.focus();
+        showToast('اكتب إجابتك هنا خلال دقيقة');
+        return;
+      }
+
+      if (isRecordingVoice) {
+        stopVoiceIfActive();
+        return;
+      }
+
+      voiceRecognition = new SpeechRec();
+      voiceRecognition.lang = 'en-US';
+      voiceRecognition.interimResults = true;
+      isRecordingVoice = true;
+      const lbl = document.getElementById('voiceRecordLabel');
+      if (lbl) lbl.textContent = 'إيقاف الفويس';
+
+      voiceRecognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = 0; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        if (targetTextarea) targetTextarea.value = transcript;
+      };
+
+      voiceRecognition.onend = () => {
+        isRecordingVoice = false;
+        const l = document.getElementById('voiceRecordLabel');
+        if (l) l.textContent = 'ابدأ الفويس';
+      };
+
+      try {
+        voiceRecognition.start();
+      } catch (e) {
+        isRecordingVoice = false;
+      }
+    }
+
+    function stopVoiceIfActive() {
+      if (voiceRecognition && isRecordingVoice) {
+        try { voiceRecognition.stop(); } catch (e) {}
+      }
+      isRecordingVoice = false;
+      const lbl = document.getElementById('voiceRecordLabel');
+      if (lbl) lbl.textContent = 'ابدأ الفويس';
+    }
+
+    function submitSurpriseAnswer() {
+      clearInterval(surpriseInterval);
+      stopVoiceIfActive();
+
+      const engSub = SUBJECTS.find(s => s.id === 'english');
+      const currentQ = engSub.surpriseQuestions[(surpriseIndex - 1 + engSub.surpriseQuestions.length) % engSub.surpriseQuestions.length];
+      const chosenRadio = document.querySelector('input[name="surpriseOpt"]:checked');
+      const voiceText = document.getElementById('surpriseVoiceAnswer').value.trim();
+
+      const resBox = document.getElementById('surpriseResultBox');
+      if (!resBox) return;
+      resBox.classList.remove('hidden');
+      resBox.className = 'p-3 rounded-2xl text-xs leading-relaxed bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200';
+
+      const isChoiceRight = chosenRadio && Number(chosenRadio.value) === currentQ.correct;
+      resBox.innerHTML = `
+        <div class="font-extrabold">${isChoiceRight || voiceText ? 'تم تسجيل إجابتك وترسيخ المعلومة!' : 'انتهى الوقت — راجع الإجابة النموذجية:'}</div>
+        <p class="mt-1"><strong>الإجابة النموذجية:</strong> ${currentQ.modelAnswer}</p>
+        ${voiceText ? `<p class="mt-1"><strong>إجابتك:</strong> "${voiceText}"</p>` : ''}
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // و) المواد الحفظية
+    // -----------------------------------------------------------------------
+    function renderMemorizationModuleHTML(sub) {
+      return `
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-4 space-y-1.5">
+            <h4 class="font-heading font-extrabold text-sm text-amber-800 dark:text-amber-300">
+              <i class="fa-solid fa-file-contract"></i> التلخيص الشامل والمبسط
+            </h4>
+            <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed">${sub.summary}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 7. المساعد الذكي المحادثاتي (شبيه بـ ChatGPT داخل تكنو)
+    // =========================================================================
+    function renderTechnoChatHTML() {
+      const bubbles = (state.chatHistory || []).map(msg => {
+        const isUser = msg.role === 'user';
+        return `
+          <div class="flex ${isUser ? 'justify-start' : 'justify-end'}">
+            <div class="max-w-[88%] sm:max-w-[78%] rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed whitespace-pre-line ${
+              isUser
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800'
+            }">
+              <div class="text-[10px] font-extrabold mb-1 opacity-75">${isUser ? (state.studentName || 'أنت') : 'تكنو (المساعد الذكي)'}</div>
+              <div>${msg.text}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-sky-500 text-white flex items-center justify-center shadow-md">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div>
+                <h2 class="font-heading font-extrabold text-base sm:text-lg">محادثة «تكنو» الذكية</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">اسأل عن المجموعات والفترات أو اطلب شرحاً أو حل واجب بأسلوب مباشر</p>
+              </div>
+            </div>
+            <button type="button" onclick="clearTechnoChat()" class="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-500/15 hover:text-rose-600 text-xs font-bold transition">
+              <i class="fa-solid fa-trash-can"></i> مسح المحادثة
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" onclick="sendChatPrompt('اشرح لي الفرق بين الاتحاد والتقاطع والفرق والمكملة')" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 text-[11px] font-bold transition">العمليات على المجموعات</button>
+            <button type="button" onclick="sendChatPrompt('ما هي قوانين دي مورجان ومتى نستخدمها؟')" class="px-2.5 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold transition">قوانين دي مورجان</button>
+            <button type="button" onclick="sendChatPrompt('كيف أتعامل مع الفترات المغلقة والمفتوحة واللانهاية؟')" class="px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold transition">الفترات على خط الأعداد</button>
+            <button type="button" onclick="sendChatPrompt('كيف أوجد مجموعة القوة P(A) وعدد عناصرها؟')" class="px-2.5 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[11px] font-bold transition">مجموعة القوة P(A)</button>
+          </div>
+
+          <div id="technoChatMessages" class="space-y-3 max-h-[420px] overflow-y-auto p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-950/40 border border-slate-200/80 dark:border-slate-800">
+            ${bubbles}
+          </div>
+
+          <div class="flex gap-2">
+            <input id="technoChatInput" type="text" onkeydown="if(event.key==='Enter') sendChatPrompt()" placeholder="اكتب سؤالك أو مسألتك هنا..." class="flex-grow rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-4 py-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <button type="button" onclick="sendChatPrompt()" class="px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-extrabold transition flex items-center gap-1.5 shrink-0">
+              <span>إرسال</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function generateTechnoSmartReply(promptText) {
+      const q = promptText.toLowerCase();
+      const name = state.studentName || 'صديقي';
+
+      if (q.includes('مورجان') || q.includes('de morgan')) {
+        return `يا ${name}، قوانين دي مورجان (ص7 في الشيت) تقول:\n• مكملة الاتحاد: (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ\n• مكملة التقاطع: (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ\nنستخدمها عندما نريد توزيع المتممة (ᶜ) على قوس به اتحاد أو تقاطع مع عكس الرمز الداخلي.`;
+      }
+      if (q.includes('اتحاد') || q.includes('تقاطع') || q.includes('فرق') || q.includes('مكملة') || q.includes('∪') || q.includes('∩')) {
+        return `ملخص العمليات على المجموعات (ص4-7) يا ${name}:\n• الاتحاد (A ∪ B): يضم جميع عناصر A و B دون تكرار.\n• التقاطع (A ∩ B): يأخذ العناصر المشتركة فقط بين A و B.\n• الفرق (A - B): يأخذ العناصر الموجودة في A وغير الموجودة في B (وانتبه أن A - B قد لا يساوي B - A).\n• المكملة (Aᶜ): كل ما ينتمي للشاملة U ولا ينتمي إلى A.`;
+      }
+      if (q.includes('فتر') || q.includes('مغلق') || q.includes('مفتوح') || q.includes('لانهاية') || q.includes('∞')) {
+        return `في الفترات الحقيقية (ص8-10) يا ${name}:\n• القوس المربع [ أو ] ودائرة مظللة تعني الحد داخلاً (≤ أو ≥).\n• القوس الهلالي ( أو ) ودائرة مفتوحة تعني الحد غير داخل (< أو >).\n• اللانهاية (-∞ أو +∞) تُكتب دائماً بقوس مفتوح () لأنها ليست عدداً منتهياً.`;
+      }
+      if (q.includes('قوة') || q.includes('p(a)') || q.includes('جزئي') || q.includes('خالي') || q.includes('∅')) {
+        return `حول المجموعات الجزئية ومجموعة القوة (ص2-3) يا ${name}:\n• إذا كان عدد عناصر A هو n، فإن عدد عناصر مجموعة القوة |P(A)| يساوي 2ⁿ.\n• المجموعة الخالية هي ∅ أو { } وهي جزئية من أي مجموعة، بينما {0} و {∅} غير خاليتين.`;
+      }
+
+      return `أهلاً بك يا ${name}! بخصوص سؤالك: "${promptText}"\nنبدأ بتحديد المعطيات والرموز من المنهج الليبي (رياضة 1 — أ. سوسن الصابري)، ثم نختار العملية أو القاعدة المناسبة (∪، ∩، A - B، Aᶜ، أو الفترات) ونطبقها خطوة بخطوة. إذا كان لديك واجب أو مسألة محددة اكتبها هنا لأشرحها لك.`;
+    }
+
+    function sendChatPrompt(presetText = '') {
+      const inputEl = document.getElementById('technoChatInput');
+      const text = (presetText || (inputEl ? inputEl.value : '')).trim();
+      if (!text) {
+        showToast('اكتب سؤالك أولاً');
+        return;
+      }
+
+      state.chatHistory.push({ role: 'user', text });
+      const reply = generateTechnoSmartReply(text);
+      state.chatHistory.push({ role: 'assistant', text: reply });
+      saveState();
+
+      if (inputEl && !presetText) inputEl.value = '';
+      if (state.activeView.kind !== 'chat') {
+        openWorkspaceTab('chat');
+      } else {
+        renderWorkspace();
+      }
+      const box = document.getElementById('technoChatMessages');
+      if (box) box.scrollTop = box.scrollHeight;
+    }
+
+    function clearTechnoChat() {
+      state.chatHistory = [
+        {
+          role: 'assistant',
+          text: 'تم مسح المحادثة. اكتب أي سؤال جديد لأجيبك عليه فوراً.'
+        }
+      ];
+      saveState();
+      renderWorkspace();
+      showToast('تم مسح سجل المحادثة');
+    }
+
+    // =========================================================================
+    // 8. تقييم التطبيق في الواجهة الرئيسية
+    // =========================================================================
+    function selectStarRating(num) {
+      selectedStarRating = num;
+      const btns = document.querySelectorAll('#starRatingButtons .star-btn');
+      btns.forEach((btn, idx) => {
+        if (idx < num) {
+          btn.classList.remove('text-slate-300', 'dark:text-slate-600');
+          btn.classList.add('text-amber-400');
+        } else {
+          btn.classList.remove('text-amber-400');
+          btn.classList.add('text-slate-300', 'dark:text-slate-600');
+        }
+      });
+    }
+
+    function submitAppReview() {
+      const commentInput = document.getElementById('reviewCommentInput');
+      const comment = (commentInput ? commentInput.value : '').trim() || 'تجربة مفيدة وواضحة للمراجعة.';
+      state.reviews.unshift({
+        name: state.studentName || 'طالب',
+        rating: selectedStarRating,
+        comment,
+        date: new Date().toLocaleDateString('ar-LY')
+      });
+      saveState();
+      if (commentInput) commentInput.value = '';
+      renderReviewsUI();
+      showToast('شكراً لتقييمك منصة تكنو!');
+    }
+
+    function renderReviewsUI() {
+      const list = state.reviews || [];
+      const count = list.length;
+      const avg = count > 0
+        ? (list.reduce((acc, item) => acc + Number(item.rating || 5), 0) / count).toFixed(1)
+        : '5.0';
+
+      const badge = document.getElementById('ratingSummaryBadge');
+      if (badge) badge.textContent = `${avg} ★ (${count})`;
+
+      const recentEl = document.getElementById('recentReviewsList');
+      if (recentEl) {
+        recentEl.innerHTML = list.slice(0, 4).map(r => `
+          <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-[11px] space-y-0.5">
+            <div class="flex items-center justify-between font-bold">
+              <span class="truncate">${r.name}</span>
+              <span class="text-amber-400 shrink-0">${'★'.repeat(r.rating)}</span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 leading-snug">${r.comment}</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    // =========================================================================
+    // 9. بنك أخطائي، الواجبات التفاعلية، والاستفسارات والرسائل
+    // =========================================================================
+    function renderMistakesBankHTML() {
+      if (state.mistakes.length === 0) {
+        return `
+          <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center mx-auto text-xl">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="font-heading font-extrabold text-base">بنك أخطائك فارغ حالياً!</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">عند حل اختبار النصفي من 30 درجة، أي سؤال تخطئ فيه يُحفظ هنا تلقائياً مع شرح سببه لتعيد اختباره.</p>
+          </div>
+        `;
+      }
+
+      const cards = state.mistakes.map((m, idx) => `
+        <div class="rounded-2xl border border-amber-500/30 bg-slate-50 dark:bg-slate-900/70 p-4 space-y-3 text-xs">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 font-extrabold">${m.subjectName} — ${m.category}</span>
+            <span class="text-[11px] text-slate-400">#${idx + 1}</span>
+          </div>
+          <p class="font-bold text-sm">${m.question}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${m.options.map((opt, oIdx) => `
+              <button type="button" onclick="retrySingleMistake('${m.id}', ${oIdx})" class="text-right p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 font-semibold transition">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="retry-feedback-${m.id}" class="hidden p-3 rounded-xl leading-relaxed"></div>
+          <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1">
+            <div><strong class="text-amber-600 dark:text-amber-400">سبب الخطأ:</strong> ${m.diagnosis}</div>
+            <div><strong class="text-sky-600 dark:text-sky-400">الشرح التفصيلي:</strong> ${m.explanation}</div>
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-4">
+          <div>
+            <h2 class="font-heading font-extrabold text-lg">بنك أخطائي المجمّع (${state.mistakes.length})</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">أعد اختبار نفسك في الأسئلة التي أخطأت فيها فقط حتى تتقنها بالكامل.</p>
+          </div>
+          <div class="space-y-3">${cards}</div>
+        </div>
+      `;
+    }
+
+    function retrySingleMistake(mistakeId, chosenIdx) {
+      const m = state.mistakes.find(item => item.id === mistakeId);
+      const fb = document.getElementById(`retry-feedback-${mistakeId}`);
+      if (!m || !fb) return;
+      fb.classList.remove('hidden');
+
+      if (chosenIdx === m.correctIndex) {
+        fb.className = 'p-3 rounded-xl leading-relaxed bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-200 font-bold';
+        fb.innerHTML = `<i class="fa-solid fa-check-circle"></i> أحسنت! صححت الفكرة بنجاح (${m.correctAnswer}).`;
+      } else {
+        fb.className = 'p-3 rounded-xl leading-relaxed bg-rose-500/15 border border-rose-500/30 text-rose-800 dark:text-rose-200 font-bold';
+        fb.innerHTML = `<i class="fa-solid fa-xmark-circle"></i> ما زال هناك التباس — الإجابة الصحيحة هي: ${m.correctAnswer}.`;
+      }
+    }
+
+    function renderHomeworkHTML() {
+      return `
+        <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-4">
+          <div>
+            <h2 class="font-heading font-extrabold text-lg text-emerald-600 dark:text-emerald-400">
+              <i class="fa-solid fa-clipboard-check"></i> خانة الواجبات التفاعلية مع «تكنو»
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              ضع مسألة الواجب أو اكتب شرحك أنت للسؤال، ثم حدد ماذا تريد بالضبط من «تكنو».
+            </p>
+          </div>
+
+          <textarea id="homeworkInput" rows="4" placeholder="اكتب نص الواجب أو شرحك أنت عن السؤال هنا..." class="w-full rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-3.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+
+          <div class="space-y-2">
+            <div class="text-xs font-extrabold text-slate-700 dark:text-slate-200">ماذا تريد بالضبط من «تكنو»؟</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <button type="button" onclick="processHomeworkRequest('explain_steps')" class="p-3 rounded-2xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-xs font-extrabold text-sky-700 dark:text-sky-300 transition">
+                1. شرح طريقة الحل خطوة بخطوة
+              </button>
+              <button type="button" onclick="processHomeworkRequest('check_my_work')" class="p-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-extrabold text-amber-700 dark:text-amber-300 transition">
+                2. تصحيح حلي وشرحي للسؤال
+              </button>
+              <button type="button" onclick="processHomeworkRequest('similar_questions')" class="p-3 rounded-2xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-xs font-extrabold text-indigo-700 dark:text-indigo-300 transition">
+                3. وضع أسئلة مشابهة للتأكد من الفهم
+              </button>
+            </div>
+          </div>
+
+          <div id="homeworkResponseBox" class="hidden rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 text-xs leading-relaxed space-y-2"></div>
+        </div>
+      `;
+    }
+
+    function processHomeworkRequest(mode) {
+      const text = document.getElementById('homeworkInput').value.trim();
+      const box = document.getElementById('homeworkResponseBox');
+      if (!text) {
+        showToast('اكتب نص الواجب أو شرحك أولاً');
+        return;
+      }
+
+      box.classList.remove('hidden');
+      const student = state.studentName || 'صديقي';
+
+      if (mode === 'explain_steps') {
+        box.innerHTML = `
+          <div class="font-extrabold text-sky-600 dark:text-sky-400">شرح خطوات الحل — موجه إلى ${student}:</div>
+          <p>بناءً على: <strong>"${text}"</strong></p>
+          <ol class="list-decimal list-inside space-y-1 text-slate-700 dark:text-slate-300">
+            <li>نحدد المعطيات والمجموعات/الفترات أو الشروط بدقة.</li>
+            <li>نختار العملية أو القاعدة المناسبة للشرط المذكور.</li>
+            <li>نكتب الناتج النهائي بوضوح مع مراعاة الأقواس والرموز.</li>
+          </ol>
+        `;
+      } else if (mode === 'check_my_work') {
+        box.innerHTML = `
+          <div class="font-extrabold text-amber-600 dark:text-amber-400">مراجعة وتصحيح شرحك — موجه إلى ${student}:</div>
+          <p>راجعنا ما كتبته: <strong>"${text}"</strong></p>
+          <p class="text-slate-700 dark:text-slate-300">تأكد من دقة الرموز (مثل ∪، ∩، Aᶜ، أو الأقواس [ ] و ( )) وعدم حذف العناصر دون سبب.</p>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="font-extrabold text-indigo-600 dark:text-indigo-400">أسئلة مشابهة للتأكد من الفهم — موجهة إلى ${student}:</div>
+          <p>بنفس فكرة: <strong>"${text}"</strong> جرّب حل هذه الأسئلة التدريبية:</p>
+          <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+            <li>سؤال 1: أوجد الاتحاد والتقاطع والفرق لمجموعتين جديدتين.</li>
+            <li>سؤال 2: مثّل فترة حقيقية على خط الأعداد واكتب متباينتها الرمزية.</li>
+          </ul>
+        `;
+      }
+    }
+
+    function renderInboxHTML() {
+      const listHtml = state.messages.length === 0
+        ? `<p class="text-xs text-slate-400">لم يتم إرسال رسائل بعد.</p>`
+        : state.messages.map(m => `
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-3.5 bg-slate-50 dark:bg-slate-900/70 text-xs space-y-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-extrabold text-sky-600 dark:text-sky-400">${m.name} • ${m.urgency}</span>
+                <span class="text-[11px] text-slate-400">${m.time}</span>
+              </div>
+              <p class="text-slate-700 dark:text-slate-200 leading-relaxed">${m.text}</p>
+            </div>
+          `).join('');
+
+      return `
+        <div class="bg-white dark:bg-techno-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-5">
+          <div>
+            <h2 class="font-heading font-extrabold text-lg text-sky-600 dark:text-sky-400">
+              <i class="fa-solid fa-envelope-open-text"></i> خانة الاستفسارات والرسائل
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              اكتب سؤالك أو استفسارك وحدد مستوى الاستعجال ليتم إرساله وحفظه.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input id="msgSenderInput" type="text" value="${state.studentName || ''}" placeholder="اسمك" class="rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+            <select id="msgUrgencySelect" class="rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="امتحاني غداً (عاجل)">امتحاني غداً (عاجل)</option>
+              <option value="واجب خلال 48 ساعة">واجب خلال 48 ساعة</option>
+              <option value="استفسار عام">استفسار عام</option>
+            </select>
+          </div>
+
+          <textarea id="msgBodyInput" rows="3" placeholder="اكتب رسالتك أو استفسارك هنا..." class="w-full rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-3.5 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+
+          <button type="button" onclick="sendInquiryMessage()" class="px-5 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-extrabold transition flex items-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i> إرسال الرسالة
+          </button>
+
+          <div class="space-y-2.5 pt-3 border-t border-slate-100 dark:border-slate-800">
+            <h3 class="font-heading font-extrabold text-sm">الرسائل المرسلة (${state.messages.length})</h3>
+            ${listHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function sendInquiryMessage() {
+      const name = document.getElementById('msgSenderInput').value.trim() || state.studentName || 'زائر';
+      const urgency = document.getElementById('msgUrgencySelect').value;
+      const text = document.getElementById('msgBodyInput').value.trim();
+
+      if (!text) {
+        showToast('اكتب نص الرسالة أولاً');
+        return;
+      }
+
+      state.messages.unshift({
+        id: Date.now(),
+        name,
+        urgency,
+        text,
+        time: new Date().toLocaleString('ar-LY')
+      });
+      saveState();
+      updateProgressUI();
+      renderWorkspace();
+      showToast('تم إرسال رسالتك وحفظها بنجاح');
+    }
+
+    // =========================================================================
+    // 10. النوافذ المنبثقة (النقاط المجمعة + قبل الامتحان بـ 30 دقيقة)
+    // =========================================================================
+    function openChecklistModal() {
+      const body = document.getElementById('checklistModalBody');
+      const modal = document.getElementById('checklistModal');
+      if (!body || !modal) return;
+      body.innerHTML = AGREED_POINTS.map((pt, i) => `
+        <div class="flex items-start gap-2.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/75 border border-slate-200 dark:border-slate-800">
+          <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white font-extrabold flex items-center justify-center shrink-0 text-[11px]">${i + 1}</span>
+          <p class="text-slate-700 dark:text-slate-200">${pt}</p>
+        </div>
+      `).join('');
+      modal.classList.remove('hidden');
+    }
+
+    function closeChecklistModal() {
+      const modal = document.getElementById('checklistModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openQuick30Modal() {
+      const body = document.getElementById('quick30Body');
+      const modal = document.getElementById('quick30Modal');
+      if (!body || !modal) return;
+      const importantItems = [];
+      SUBJECTS.forEach(sub => {
+        if (sub.formulas && sub.formulas.length > 0) {
+          sub.formulas.filter(f => f.examImportant).forEach(f => {
+            importantItems.push(`<strong>${sub.name} — ${f.name} [مهم للامتحان ⚠️]:</strong> <span class="math-ltr font-mono">${f.formula}</span> — <em>متى يُستخدم:</em> ${f.whenToUse}`);
+          });
+        }
+      });
+
+      body.innerHTML = importantItems.map(line => `
+        <div class="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-slate-800 dark:text-slate-100">${line}</div>
+      `).join('');
+      modal.classList.remove('hidden');
+    }
+
+    function closeQuick30Modal() {
+      const modal = document.getElementById('quick30Modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // =========================================================================
+    // 11. درع الحماية من النسخ على المتصفح
+    // =========================================================================
+    function toggleCopyDeterrent(enabled) {
+      state.copyDeterrent = enabled;
+      saveState();
+      applyCopyDeterrent(enabled);
+      showToast(enabled ? 'تم تفعيل التحصين وحماية المتصفح ضد النسخ' : 'تم إيقاف الحماية من النسخ مؤقتاً');
+    }
+
+    function isEditableTarget(target) {
+      if (!target) return false;
+      const tag = target.tagName ? target.tagName.toLowerCase() : '';
+      return tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable;
+    }
+
+    function applyCopyDeterrent(enabled) {
+      const root = document.getElementById('appRoot');
+      if (!root) return;
+      if (enabled) {
+        root.classList.add('protected-select');
+        document.oncontextmenu = (e) => {
+          if (isEditableTarget(e.target)) return true;
+          showToast('النسخ والزر الأيمن محظوران لحماية حقوق المحتوى');
+          return false;
+        };
+        document.oncopy = (e) => {
+          if (isEditableTarget(e.target)) return true;
+          e.preventDefault();
+          showToast('نسخ النصوص محظور لحماية محتوى المنصة');
+          return false;
+        };
+        document.ondragstart = (e) => {
+          if (isEditableTarget(e.target)) return true;
+          e.preventDefault();
+          return false;
+        };
+        document.onkeydown = (e) => {
+          if (isEditableTarget(e.target)) return true;
+          const key = (e.key || '').toLowerCase();
+          if (key === 'f12' || ((e.ctrlKey || e.metaKey) && ['c', 'u', 's', 'a', 'p', 'x'].includes(key))) {
+            e.preventDefault();
+            showToast('اختصارات النسخ والعرض محظورة لحماية المحتوى');
+            return false;
+          }
+          if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(key)) {
+            e.preventDefault();
+            showToast('أدوات المطور والنسخ محظورة على المحتوى');
+            return false;
+          }
+          return true;
+        };
+      } else {
+        root.classList.remove('protected-select');
+        document.oncontextmenu = null;
+        document.oncopy = null;
+        document.ondragstart = null;
+        document.onkeydown = null;
+      }
+    }
+  </script>
+</body>
+</html>
